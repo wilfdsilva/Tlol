@@ -29,7 +29,7 @@ st.markdown("""
         }
         /* Disable scrolling on the main Streamlit wrapper so only the iframe scrolls natively */
         body, html, [data-testid="stAppViewContainer"] {
-            overflow: hidden !important; 
+            overflow: hidden !important;
             margin: 0 !important;
             padding: 0 !important;
         }
@@ -92,19 +92,19 @@ html_code = """
   .hero-section {
     position:relative; padding:90px 4vw 70px; text-align:center; overflow:hidden;
   }
-  
+
   .eyebrow{
     display:inline-flex; align-items:center; gap:10px;
     font-weight:700; letter-spacing:0.35em; text-transform:uppercase; font-size:11px;
     color:var(--hextech); margin-bottom:22px;
   }
   .eyebrow::before, .eyebrow::after{content:"";width:28px;height:1px;background:var(--gold);}
-  
+
   .subhead{
     font-family:'Fraunces', serif; font-style:italic; font-weight:500;
     font-size:clamp(16px,2.4vw,22px); color:var(--muted); max-width:640px; margin:0 auto 70px;
   }
-  
+
   .stat-strip{
     display:flex; flex-wrap:wrap; justify-content:center; margin:30px auto 44px; max-width:820px;
     border:1px solid var(--line); border-radius:14px; overflow:hidden; background:rgba(255,255,255,0.02);
@@ -215,7 +215,7 @@ html_code = """
   .tier-chip{display:inline-flex; align-items:center; gap:4px; font-size:9.5px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:3px 10px; border-radius:20px; margin-bottom:8px;}
   .pcard-name{font-weight:700; font-size:15.5px; margin-bottom:4px;}
   .pcard-tag{font-size:11.5px; color:var(--muted); margin-bottom:12px;}
-  
+
   .pcard-stats, .modal-stats, .tt-stats{display:flex; justify-content:center; gap:10px; font-size:10.5px; color:var(--muted);}
   .pcard-stats div, .modal-stats div, .tt-stats div {
     flex: 1; aspect-ratio: 1 / 1; display: flex; flex-direction: column; justify-content: center;
@@ -223,7 +223,7 @@ html_code = """
     border-radius: 8px; padding: 6px;
   }
   .pcard-stats b, .modal-stats b, .tt-stats b {display:block; color:var(--gold-bright); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.02em; line-height:1;}
-  
+
   .champ-ribbon{position:absolute; top:12px; right:-32px; transform:rotate(40deg); background:var(--maroon); color:var(--gold-bright); font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:4px 38px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:3;}
   .no-results{text-align:center; color:var(--muted); padding:40px 0; font-size:14px; display:none;}
 
@@ -240,8 +240,8 @@ html_code = """
 
   /* ---------- Chapter 4: Full roster grid (Fluid Auto-fill width) ---------- */
   .lineup-grid{
-    display:grid; 
-    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); 
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
     gap:26px 14px;
     justify-content: center;
   }
@@ -274,12 +274,12 @@ html_code = """
   .overlay{position:fixed; inset:0; background:rgba(6,7,11,0.78); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; z-index:50; padding:24px;}
   .overlay.show{display:flex;}
   .modal{width:100%; max-width:480px; max-height:88vh; overflow-y:auto; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:20px; position:relative; box-shadow:0 30px 80px rgba(0,0,0,0.6); animation:popBounce .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;}
-  
+
   @keyframes popBounce{
     0% { transform: translateY(80px) scale(0.95); opacity: 0; }
     100% { transform: translateY(0) scale(1); opacity: 1; }
   }
-  
+
   .modal-close{position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--line); color:var(--cream); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: transform 0.2s, background 0.2s;}
   .modal-close:hover{background:var(--maroon); border-color:var(--maroon); transform:rotate(90deg);}
   .modal-top{padding:34px 28px 22px; text-align:center; background:radial-gradient(220px 140px at 50% 0%, rgba(10,200,185,0.12), transparent 65%); border-bottom:1px dashed var(--line);}
@@ -310,12 +310,12 @@ html_code = """
 <section class="hero-section" id="story">
   <div class="eyebrow">Est. 2023 &middot; TCOE League of Legends</div>
   <p class="subhead">Three editions. One rivalry that never sat down. This is where every champion, every MVP, and every ridiculous team name earns a permanent plaque.</p>
-  
+
   <div class="block-head">
     <div class="kicker">Chapter One</div>
     <h2>The Legend of TCOE League of Legends</h2>
   </div>
-  
+
   <div class="story-container" id="storyContainer">
     <p class="story-line">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
     <p class="story-line">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
@@ -341,7 +341,7 @@ html_code = """
     <h2>Yearly Trophy Cabinet</h2>
     <p>Every edition, glassed in. The Year MVP is whoever won the most events that year &mdash; tap a case to open the full winning roster.</p>
   </div>
-  
+
   <div class="stat-strip" id="statStrip"></div>
 
   <div class="cabinet-row" id="cabinetRow"></div>
@@ -462,8 +462,8 @@ const TOURNAMENTS = [
 ];
 
 const NEW_ROOKIES = [
-  "Esha Patel", "Parth Passi", "Kaumod Bagale", "Jagruti Chaudhari", 
-  "Darshan Walwatkar", "Pritam Purohit", "Akhilesh Rai", 
+  "Esha Patel", "Parth Passi", "Kaumod Bagale", "Jagruti Chaudhari",
+  "Darshan Walwatkar", "Pritam Purohit", "Akhilesh Rai",
   "Soujanya Siripuram", "Yogesh Karande", "Chandrajit Yadav"
 ];
 
@@ -527,11 +527,11 @@ const TIER_META = {
 /* Pulls avatar from github dynamically using EXACT player name */
 function roundAvatar(name, tier, size){
   const meta = TIER_META[tier];
-  
+
   // Use the exact player name to construct the URL (e.g., "Wilfred D'silva.jpg")
   const exactName = encodeURIComponent(name);
   const imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${exactName}.jpg`;
-  
+
   // Fallback text color set to 0a0c12 (dark slate) so it remains clearly visible
   const fallbackUrl = `https://ui-avatars.com/api/?name=${exactName}&background=transparent&color=0a0c12&bold=true`;
 
@@ -585,9 +585,9 @@ const QUOTE_BANK = [
   "They hoped for a chance; I gave them a lesson.",
   "I am the benchmark of success."
 ];
-function quoteFor(name){ 
+function quoteFor(name){
   if (NEW_ROOKIES.includes(name)) return "A new challenger approaches.";
-  return QUOTE_BANK[hashStr(name) % QUOTE_BANK.length]; 
+  return QUOTE_BANK[hashStr(name) % QUOTE_BANK.length];
 }
 
 document.getElementById('statStrip').innerHTML = `
@@ -686,7 +686,7 @@ function renderGrid(){
       setTimeout(() => {
         this.classList.remove('slotting');
         openModal(p);
-      }, 250); 
+      }, 250);
     });
     wofGrid.appendChild(card);
   });
@@ -702,10 +702,10 @@ function openModal(p){
   const eventRows = p.events.length
     ? p.events.map(m=>`<div class="award-row"><span class="ev">${m.event}</span><span class="yr">${m.year}</span></div>`).join('')
     : `<div class="award-row"><span class="ev">No individual events yet.</span></div>`;
-  
+
   modal.style.animation = 'none';
-  modal.offsetHeight; 
-  modal.style.animation = null; 
+  modal.offsetHeight;
+  modal.style.animation = null;
 
   modal.innerHTML = `
     <button class="modal-close" id="closeBtn">&times;</button>
@@ -747,7 +747,7 @@ fullRoster.forEach(p=>{
   const trophies = p.years.map(y=>`<span title="${y}">${yearIcon[y]}</span>`).join('');
   const el = document.createElement('div');
   el.className = 'roster-card';
-  
+
   el.innerHTML = `
     ${roundAvatar(p.name, p.tier)}
     <div class="roster-name" title="${p.name}">${p.name}</div>
