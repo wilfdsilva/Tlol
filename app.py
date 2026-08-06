@@ -88,16 +88,16 @@ html_code = """
     transition:background 0.05s linear;
   }
 
-  header{
+  /* Merged Header & Chapter One Section */
+  .hero-section {
     position:relative; padding:90px 4vw 70px; text-align:center; overflow:hidden;
-    border-bottom:1px solid var(--line);
   }
-  header::before, header::after{
+  .hero-section::before, .hero-section::after{
     content:""; position:absolute; top:0; bottom:0; width:14px;
     background:repeating-linear-gradient(180deg, var(--maroon) 0 26px, var(--maroon-bright) 26px 30px);
     opacity:0.5;
   }
-  header::before{left:0;} header::after{right:0;}
+  .hero-section::before{left:0;} .hero-section::after{right:0;}
   .eyebrow{
     display:inline-flex; align-items:center; gap:10px;
     font-weight:700; letter-spacing:0.35em; text-transform:uppercase; font-size:11px;
@@ -107,7 +107,7 @@ html_code = """
   
   .subhead{
     font-family:'Fraunces', serif; font-style:italic; font-weight:500;
-    font-size:clamp(16px,2.4vw,22px); color:var(--muted); max-width:640px; margin:0 auto;
+    font-size:clamp(16px,2.4vw,22px); color:var(--muted); max-width:640px; margin:0 auto 70px;
   }
   
   .stat-strip{
@@ -311,16 +311,16 @@ html_code = """
 
 <div id="spotlight"></div>
 
-<header>
+<!-- Merged Hero & Story Section -->
+<section class="hero-section" id="story">
   <div class="eyebrow">Est. 2023 &middot; TCOE League of Legends</div>
   <p class="subhead">Three editions. One rivalry that never sat down. This is where every champion, every MVP, and every ridiculous team name earns a permanent plaque.</p>
-</header>
-
-<section class="block" id="story">
+  
   <div class="block-head">
     <div class="kicker">Chapter One</div>
     <h2>The Legend of TCOE League of Legends</h2>
   </div>
+  
   <div class="story-container" id="storyContainer">
     <p class="story-line">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
     <p class="story-line">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
