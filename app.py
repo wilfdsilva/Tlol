@@ -1,4 +1,697 @@
 import streamlit as st
+import streamlit.components.v1 as components
 
-st.title("Office TLOL Tournament")
-st.write("Welcome!")
+# Configure the Streamlit page
+st.set_page_config(
+    page_title="The TLOL Trophy Hall",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+# The updated HTML, CSS, and JS code with the image mapping
+html_code = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The TLOL Trophy Hall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0c12;
+    --panel:#161b28;
+    --panel-2:#1d2333;
+    --gold:#d8b26b;
+    --gold-bright:#f3d18e;
+    --maroon:#7c2438;
+    --maroon-bright:#a3324b;
+    --cream:#f3ead8;
+    --muted:#9098ac;
+    --line:rgba(120,160,255,0.16);
+    --hextech:#0ac8b9;
+    --t-challenger:#f3d18e;
+    --t-diamond:#79d3f0;
+    --t-gold:#e0b64f;
+    --t-bronze:#b5793f;
+    --hex-clip: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0% 50%);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(10,200,185,0.12), transparent 60%),
+      radial-gradient(1000px 500px at 90% 0%, rgba(216,178,107,0.10), transparent 55%),
+      var(--bg);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold); color:#1a1200;}
+  a{color:inherit;}
+
+  #spotlight{
+    position:fixed; inset:0; pointer-events:none; z-index:5;
+    background:radial-gradient(320px 320px at var(--mx,50%) var(--my,50%), rgba(10,200,185,0.07), transparent 70%);
+    transition:background 0.05s linear;
+  }
+
+  header{
+    position:relative; padding:90px 6vw 70px; text-align:center; overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  header::before, header::after{
+    content:""; position:absolute; top:0; bottom:0; width:14px;
+    background:repeating-linear-gradient(180deg, var(--maroon) 0 26px, var(--maroon-bright) 26px 30px);
+    opacity:0.5;
+  }
+  header::before{left:0;} header::after{right:0;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-weight:700; letter-spacing:0.35em; text-transform:uppercase; font-size:11px;
+    color:var(--hextech); margin-bottom:22px;
+  }
+  .eyebrow::before, .eyebrow::after{content:"";width:28px;height:1px;background:var(--gold);}
+  h1{
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(48px, 9vw, 108px);
+    letter-spacing:0.04em; margin:0; line-height:0.95;
+    background:linear-gradient(180deg, var(--gold-bright), var(--gold) 55%, #a9843f);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .subhead{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    font-size:clamp(16px,2.4vw,22px); color:var(--muted); max-width:640px; margin:22px auto 0;
+  }
+  .stat-strip{
+    display:flex; flex-wrap:wrap; justify-content:center; margin:52px auto 0; max-width:820px;
+    border:1px solid var(--line); border-radius:14px; overflow:hidden; background:rgba(255,255,255,0.02);
+  }
+  .stat{flex:1 1 150px; padding:22px 18px; text-align:center; border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat b{display:block; font-family:'Bebas Neue',sans-serif; font-size:34px; color:var(--gold-bright); letter-spacing:0.03em;}
+  .stat span{font-size:11px; text-transform:uppercase; letter-spacing:0.14em; color:var(--muted);}
+
+  section.block{padding:80px 6vw; max-width:1400px; margin:0 auto;}
+  .block-head{margin-bottom:44px; text-align:center;}
+  .block-head .kicker{font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--maroon-bright); font-weight:700; margin-bottom:10px;}
+  .block-head h2{font-family:'Bebas Neue',sans-serif; font-size:clamp(34px,5vw,54px); letter-spacing:0.03em; margin:0 0 12px;}
+  .block-head p{color:var(--muted); max-width:620px; margin:0 auto; font-size:15px; line-height:1.6;}
+
+  /* ---------- Trophy Cabinet ---------- */
+  .cabinet-row{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:28px;}
+  .case{position:relative; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.35);}
+  .case-top{padding:26px 26px 20px; background:linear-gradient(160deg, rgba(124,36,56,0.5), rgba(124,36,56,0) 60%), radial-gradient(circle at 85% 0%, rgba(10,200,185,0.14), transparent 55%); border-bottom:1px dashed var(--line); position:relative;}
+  .case-year{font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.25em; color:var(--gold-bright); text-transform:uppercase;}
+  .case-title{font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:0.02em; margin:4px 0 2px;}
+  .case-edition{font-family:'Fraunces',serif; font-style:italic; color:var(--muted); font-size:15px;}
+  .trophy-mark{position:absolute; top:22px; right:22px; font-size:34px; display:flex; align-items:center; justify-content:center; filter:drop-shadow(0 6px 10px rgba(0,0,0,0.5));}
+  .champion-line, .mvp-highlight{margin-top:14px; padding:12px 14px; border-radius:10px; font-size:13.5px; display:flex; gap:10px; align-items:flex-start; border:1px solid var(--line);}
+  .champion-line{background:rgba(124,36,56,0.2); border-color:rgba(163,50,75,0.4);}
+  .mvp-highlight{background:rgba(10,200,185,0.08); border-color:rgba(10,200,185,0.3);}
+  .champion-line b, .mvp-highlight b{font-weight:700; display:block; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;}
+  .champion-line b{color:var(--maroon-bright);}
+  .mvp-highlight b{color:var(--hextech);}
+  .champion-line .team-name{font-family:'Fraunces',serif; font-style:italic; font-size:16px; color:var(--cream); display:block; margin-top:1px;}
+  .mvp-highlight .mvp-names{font-size:15px; color:var(--cream); font-weight:600; display:block; margin-top:1px;}
+  .mvp-highlight .mvp-count{font-size:11.5px; color:var(--muted);}
+
+  .case-body{padding:18px 26px 8px;}
+  .mvp-label{font-size:10.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--maroon-bright); font-weight:700; margin-bottom:10px;}
+  .mvp-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .mvp-list li{display:flex; justify-content:space-between; gap:10px; font-size:13.5px; padding:8px 10px; border-radius:8px; background:rgba(255,255,255,0.02); border:1px solid transparent;}
+  .mvp-list li:hover{border-color:var(--line); background:rgba(10,200,185,0.05);}
+  .mvp-list .ev{color:var(--muted); font-weight:600;}
+  .mvp-list .who{color:var(--cream); text-align:right; font-weight:500;}
+  .mvp-list .who.team{color:var(--gold-bright); font-style:italic;}
+
+  .case-toggle{width:100%; margin-top:14px; padding:14px 26px; background:rgba(124,36,56,0.15); border:none; border-top:1px solid var(--line); color:var(--gold-bright); font-weight:700; font-size:12px; letter-spacing:0.15em; text-transform:uppercase; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;}
+  .case-toggle:hover{background:rgba(124,36,56,0.28);}
+  .case-toggle .chev{transition:transform .25s ease;}
+  .case.open .case-toggle .chev{transform:rotate(180deg);}
+  .roster{max-height:0; overflow:hidden; transition:max-height .35s ease; padding:0 26px;}
+  .case.open .roster{max-height:400px; padding:16px 26px 22px;}
+  .roster-label{font-size:10.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;}
+  .roster-grid{display:flex; flex-wrap:wrap; gap:8px;}
+  .roster-grid span{background:rgba(255,255,255,0.04); border:1px solid var(--line); padding:6px 11px; border-radius:20px; font-size:12.5px;}
+
+  /* ---------- Hex avatar frame ---------- */
+  .hex-frame{position:relative; width:100%; aspect-ratio:1; clip-path:var(--hex-clip); flex-shrink:0;}
+  .hex-inner{position:absolute; inset:4px; clip-path:var(--hex-clip); background:transparent; overflow:hidden;}
+  .hex-inner img{transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); object-fit: cover; object-position: center;}
+  .rank-badge{
+    position:absolute; bottom:-6px; right:-6px; width:26px; height:26px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:13px;
+    border:2px solid #0a0c12; box-shadow:0 4px 10px rgba(0,0,0,0.6); z-index:2;
+  }
+
+  /* ---------- Walk of Fame ---------- */
+  .wof-controls{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:center; margin-bottom:36px;}
+  .wof-search{flex:1 1 240px; max-width:320px; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:11px 16px; color:var(--cream); font-size:14px;}
+  .wof-search::placeholder{color:var(--muted);}
+  .wof-search:focus{outline:none; border-color:var(--hextech);}
+  .chip-group{display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{padding:9px 16px; border-radius:20px; border:1px solid var(--line); background:transparent; color:var(--muted); font-size:12.5px; font-weight:600; letter-spacing:0.04em; cursor:pointer;}
+  .chip:hover{color:var(--cream); border-color:var(--hextech);}
+  .chip.active{background:var(--hextech); color:#04211d; border-color:var(--hextech);}
+
+  .wof-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:20px;}
+  .pcard{background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:16px; padding:26px 18px 18px; text-align:center; cursor:pointer; position:relative; overflow:hidden; transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow .3s ease, border-color .3s ease;}
+  .pcard::before{content:""; position:absolute; inset:0; background:radial-gradient(160px 100px at 50% -10%, rgba(10,200,185,0.16), transparent 60%); opacity:0; transition:opacity .25s ease;}
+  .pcard:hover{transform:translateY(-8px) scale(1.03); border-color:var(--hextech); box-shadow:0 22px 45px rgba(0,0,0,0.5);}
+  .pcard:hover::before{opacity:1;}
+  .pcard:hover .hex-inner img{transform: scale(1.15);}
+  .pcard .hex-frame{width:104px; margin:0 auto 14px;}
+  .tier-chip{display:inline-flex; align-items:center; gap:4px; font-size:9.5px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:3px 10px; border-radius:20px; margin-bottom:8px;}
+  .pcard-name{font-weight:700; font-size:15.5px; margin-bottom:4px;}
+  .pcard-tag{font-size:11.5px; color:var(--muted); margin-bottom:12px;}
+  
+  /* Stat Squares */
+  .pcard-stats, .modal-stats, .tt-stats{display:flex; justify-content:center; gap:10px; font-size:10.5px; color:var(--muted);}
+  .pcard-stats div, .modal-stats div, .tt-stats div {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px;
+  }
+  .pcard-stats b, .modal-stats b, .tt-stats b {display:block; color:var(--gold-bright); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.02em; line-height:1;}
+  
+  .champ-ribbon{position:absolute; top:12px; right:-32px; transform:rotate(40deg); background:var(--maroon); color:var(--gold-bright); font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:4px 38px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:3;}
+  .no-results{text-align:center; color:var(--muted); padding:40px 0; font-size:14px; display:none;}
+
+  /* Slot Up Click Animation for Cards */
+  @keyframes slotUpCard {
+    0% { transform: translateY(0) scale(1.03); opacity: 1; }
+    100% { transform: translateY(-80px) scale(1.05); opacity: 0; }
+  }
+  .pcard.slotting {
+    animation: slotUpCard 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    pointer-events: none;
+  }
+
+  /* ---------- Chapter 3: Full roster grid ---------- */
+  .lineup-grid{
+    display:grid; grid-template-columns:repeat(8, 1fr); gap:22px 14px;
+  }
+  .roster-card{position:relative; text-align:center; cursor:pointer;}
+  .roster-card .hex-frame{transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+  .roster-card:hover .hex-frame{transform:translateY(-6px) scale(1.08);}
+  .roster-name{
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--cream);
+    margin-top: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 4px;
+  }
+  .roster-trophies{display:flex; justify-content:center; gap:4px; margin-top:4px; min-height:16px; font-size:13px;}
+  .roster-tooltip{
+    position:absolute; bottom:100%; left:50%; transform:translate(-50%, 12px) scale(0.9);
+    width:210px; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--hextech);
+    border-radius:12px; padding:13px 13px 11px; opacity:0; pointer-events:none;
+    transition:opacity .2s ease, transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index:20; box-shadow:0 16px 40px rgba(0,0,0,0.55);
+  }
+  .roster-card:hover .roster-tooltip{opacity:1; transform:translate(-50%, -4px) scale(1);}
+  .roster-tooltip::after{content:""; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:7px solid transparent; border-top-color:var(--hextech);}
+  .roster-tooltip .tt-name{font-weight:800; font-size:14px; margin-bottom:6px;}
+  .roster-tooltip .tt-tier{font-size:10px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; display:inline-flex; align-items:center; gap:4px;}
+  .roster-tooltip .tt-stats b{font-size:18px;}
+  .lineup-legend{display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:44px; font-size:11.5px; color:var(--muted);}
+  .lineup-legend span{display:inline-flex; align-items:center; gap:6px;}
+
+  @media (max-width:1100px){ .lineup-grid{grid-template-columns:repeat(6,1fr);} }
+  @media (max-width:760px){ .lineup-grid{grid-template-columns:repeat(4,1fr); gap:26px 10px;} }
+  @media (max-width:460px){ .lineup-grid{grid-template-columns:repeat(3,1fr);} }
+
+  /* ---------- Modal ---------- */
+  .overlay{position:fixed; inset:0; background:rgba(6,7,11,0.78); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; z-index:50; padding:24px;}
+  .overlay.show{display:flex;}
+  .modal{width:100%; max-width:480px; max-height:88vh; overflow-y:auto; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:20px; position:relative; box-shadow:0 30px 80px rgba(0,0,0,0.6); animation:popBounce .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;}
+  
+  @keyframes popBounce{
+    0% { transform: translateY(150px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  
+  .modal-close{position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--line); color:var(--cream); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: transform 0.2s, background 0.2s;}
+  .modal-close:hover{background:var(--maroon); border-color:var(--maroon); transform:rotate(90deg);}
+  .modal-top{padding:34px 28px 22px; text-align:center; background:radial-gradient(220px 140px at 50% 0%, rgba(10,200,185,0.12), transparent 65%); border-bottom:1px dashed var(--line);}
+  .modal-top .hex-frame{width:140px; margin:0 auto 16px;}
+  .modal-name{font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:0.02em; margin-top:8px;}
+  .modal-quote{font-family:'Fraunces',serif; font-style:italic; color:var(--gold-bright); font-size:14.5px; margin-top:10px; line-height:1.5;}
+  .modal-body{padding:22px 28px 30px;}
+  .modal-section{margin-bottom:20px;}
+  .modal-section h4{font-size:10.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); margin:0 0 10px; font-weight:700;}
+  .badge-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .badge{padding:6px 12px; border-radius:20px; font-size:12px; font-weight:600; border:1px solid var(--line); background:rgba(255,255,255,0.03); color:var(--cream);}
+  .badge.gold{background:rgba(216,178,107,0.14); border-color:var(--gold); color:var(--gold-bright);}
+  .award-row{display:flex; justify-content:space-between; gap:10px; font-size:13px; padding:9px 0; border-bottom:1px solid var(--line);}
+  .award-row:last-child{border-bottom:none;}
+  .award-row .ev{color:var(--muted);}
+  .award-row .yr{color:var(--gold-bright); font-weight:700; font-family:'Bebas Neue',sans-serif; letter-spacing:0.03em;}
+  .modal-stats span{font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted);}
+
+  footer{text-align:center; padding:50px 6vw 60px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line);}
+  footer b{color:var(--gold-bright);}
+
+  @media (max-width:520px){
+    header{padding:70px 5vw 50px;}
+    section.block{padding:56px 5vw;}
+  }
+</style>
+</head>
+<body>
+
+<div id="spotlight"></div>
+
+<header>
+  <div class="eyebrow">Est. 2023 &middot; Office Games Hall of Fame</div>
+  <h1>THE TLOL<br>TROPHY HALL</h1>
+  <p class="subhead">Three editions. One rivalry that never sat down. This is where every champion, every MVP, and every ridiculous team name earns a permanent plaque.</p>
+  <div class="stat-strip" id="statStrip"></div>
+</header>
+
+<section class="block" id="cabinet">
+  <div class="block-head">
+    <div class="kicker">Chapter One</div>
+    <h2>Yearly Trophy Cabinet</h2>
+    <p>Every edition, glassed in. The Year MVP is whoever won the most events that year &mdash; tap a case to open the full winning roster.</p>
+  </div>
+  <div class="cabinet-row" id="cabinetRow"></div>
+</section>
+
+<section class="block" id="wof">
+  <div class="block-head">
+    <div class="kicker">Chapter Two</div>
+    <h2>Walk of Fame</h2>
+    <p>Every player who ever left the TLOL floor with a trophy, styled as a Rift-ready summoner icon &mdash; rank border generated from their stats. Click a card for the full story.</p>
+  </div>
+  <div class="wof-controls">
+    <input class="wof-search" id="searchInput" type="text" placeholder="Search a legend by name&hellip;">
+    <div class="chip-group" id="yearChips"></div>
+  </div>
+  <div class="wof-grid" id="wofGrid"></div>
+  <div class="no-results" id="noResults">No legend matches that search. Try another name or year.</div>
+</section>
+
+<section class="block" id="lineup">
+  <div class="block-head">
+    <div class="kicker">Chapter Three</div>
+    <h2>The Full Roster Line-Up</h2>
+    <p>Every single person who's ever played TLOL, ranked by stats &mdash; strongest record first. Hover anyone to see who they are and what they won.</p>
+  </div>
+  <div class="lineup-grid" id="lineupGrid"></div>
+  <div class="lineup-legend" id="lineupLegend"></div>
+</section>
+
+<footer>
+  Built from three years of carrom smack talk, foosball rematches, and one unforgettable cricket final.<br>
+  <b>TLOL &mdash; The League of Legends*</b> &middot; *not that one.
+</footer>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+/* ============ RAW TOURNAMENT DATA ============ */
+const TOURNAMENTS = [
+  {
+    id:'tlol1', label:'TLOL 1', edition:'The Experiment', year:2023, icon:'🧪',
+    champion:{ team:"Tooten Dilon ki Toli", members:["Nisha Saini","Wilfred D'silva","Dhananjay Kulkarni","Suraj Kamerkar","Saurabh Mahadik","Irshad Darji","Pooja Nandoskar","Vishal Shinde","Mayur Pawar","Mahesh Pale","Sanjay Tumma","Gayatri Zuting"] },
+    events:[
+      {event:"Carrom &middot; Singles", winners:["Jay Jagad"]},
+      {event:"Carrom &middot; Doubles", winners:["Saurabh Mahadik","Sanjay Tumma"]},
+      {event:"Foosball &middot; Doubles", winners:["Dhananjay Kulkarni","Gayatri Zuting"]},
+      {event:"Table Tennis &middot; Singles", winners:["Dhananjay Kulkarni"]},
+      {event:"Table Tennis &middot; Doubles", winners:["Wilfred D'silva","Dhananjay Kulkarni"]},
+      {event:"PS5 &middot; FIFA", winners:["Pritesh Menon"]},
+      {event:"PS5 &middot; Racing", winners:["Arijit Ghosh"]},
+      {event:"Chess", winners:["Arijit Ghosh"]},
+      {event:"Cricket", team:"The MVPs"}
+    ]
+  },
+  {
+    id:'tlol2', label:'TLOL 2', edition:'Avengers Edition', year:2024, icon:'🛡️',
+    champion:{ team:"Team Captain", members:["Wilfred D'silva","Rachita Harit","Amitabh Singh","Pooja Nandoskar","Asif Khan","Vishal Shinde","Kartik Nair","Vishal Dubey","Dhananjay Kulkarni","Bishal Pandit","Adnan Shaikh","Amit Singh","Hitesh Ghadigaonkar","Esakki Shummugavel"] },
+    events:[
+      {event:"Pen Fighting", winners:["Wilfred D'silva"]},
+      {event:"Table Tennis &middot; Doubles", winners:["Adnan Shaikh","Dhananjay Kulkarni"]},
+      {event:"PS5 &middot; Volta Doubles", winners:["Adnan Shaikh","Wilfred D'silva"]},
+      {event:"Chess", winners:["Arijit Ghosh"]},
+      {event:"Carrom &middot; Doubles", winners:["Jay Jagad","Umesh Tank"]},
+      {event:"Foosball &middot; Doubles", winners:["Gayatri Zuting","Blessen Thomas"]},
+      {event:"Olympic Games", team:"Team Captain"},
+      {event:"Cricket", team:"Team Stark"}
+    ]
+  },
+  {
+    id:'tlol3', label:'TLOL 3', edition:'Bollywood Edition', year:2025, icon:'🎬',
+    champion:{ team:"Badshah Blasters", members:["Somansh Datta","Pritesh Menon","Samiksha Prabhu","Umesh Gawde","Wilfred D'silva","Gayatri Zuting","Hitesh Ghadigaonkar","Kiran Padwal","N Pratap Kumar","Pooja Nandoskar","Saurabh Mahadik","Vijay Chinkate","Vishal Shinde"] },
+    events:[
+      {event:"Table Tennis &middot; Doubles", winners:["Pritesh Menon","Wilfred D'silva"]},
+      {event:"Carrom &middot; Doubles", winners:["Jay Jagad","Umesh Tank"]},
+      {event:"Foosball &middot; Doubles", winners:["Blessen Thomas","Asif Khan"]},
+      {event:"Chess", winners:["Saurabh Mahadik"]},
+      {event:"Badminton &middot; Doubles", winners:["Pritesh Menon","Saurabh Mahadik"]},
+      {event:"Olympic Games", team:"Team Gully Gang"},
+      {event:"Cricket", team:"Badshah Blasters"}
+    ]
+  }
+];
+
+const ALL_PARTICIPANTS = ["Adnan Shaikh","Amit Singh","Amitabh Singh","Ankit Yadav","Arijit Ghosh","Arvind Arumuga Nainar","Asif Khan","Ashna Kumar","Avinash Chorage","Avinash Gowda","Bhagyashree Dhotre","Bhaskar Patil","Bijal Gala","Bishal Pandit","Blessen Thomas","Darshil Vekaria","Dhananjay Kulkarni","Esakki Shummugavel","Gayatri Zuting","Gurpreet Kaur","Hitesh Ghadigaonkar","Irshad Darji","Jay Jagad","Jincy Geevarghese","John Yesudasan","Johnson Thomas","Kartik Nair","Kiran Padwal","Kishansingh Devda","Komal Panjwani","Kshitij Wadankar","Lalit Chavan","Mahesh Pale","Mayur Pawar","N Pratap Kumar","Nilesh Mulik","Nilesh Sansare","Nisha Saini","Pooja Nandoskar","Prachi Dalvi","Pramod Patel","Pritam Paparkar","Pritesh Menon","Rachita Harit","Rahul Arjun","Rahul Pokharkar","Ravi Chavan","Ravi Khanra","Samiksha Prabhu","Sanjay Tumma","Sanket Patil","Sanskar Bagwe","Saurabh Mahadik","Shreejith Menon","Shweta Vichare","Somansh Datta","Suraj Kamerkar","Umesh Gawde","Umesh Tank","Vibhuti Dabholkar","Vijay Chinkate","Vijay Sangale","Vishal Dubey","Vishal Shinde","Wilfred D'silva"];
+
+function hashStr(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i)) >>> 0; } return h; }
+
+function computeYearMVP(t){
+  const counts = {};
+  t.events.forEach(ev=>{ (ev.winners||[]).forEach(w=>{ counts[w] = (counts[w]||0) + 1; }); });
+  const max = Math.max(0, ...Object.values(counts));
+  const winners = Object.keys(counts).filter(n=>counts[n]===max && max>0);
+  return { winners, count:max };
+}
+
+const players = {};
+function ensurePlayer(name){
+  if(!players[name]) players[name] = { championships:[], events:[], yearMVP:[] };
+  return players[name];
+}
+ALL_PARTICIPANTS.forEach(ensurePlayer);
+TOURNAMENTS.forEach(t=>{
+  t.champion.members.forEach(m=>{ ensurePlayer(m).championships.push({year:t.year, team:t.champion.team, edition:t.edition}); });
+  t.events.forEach(ev=>{ (ev.winners||[]).forEach(w=>{ ensurePlayer(w).events.push({year:t.year, edition:t.edition, event:ev.event}); }); });
+  const {winners, count} = computeYearMVP(t);
+  winners.forEach(w=>{ ensurePlayer(w).yearMVP.push({year:t.year, edition:t.edition, count}); });
+});
+
+function tierFor(p){
+  const score = p.championships.length*3 + p.yearMVP.length*2 + p.events.length*1;
+  if(score >= 6) return 'challenger';
+  if(score >= 3) return 'diamond';
+  if(score >= 1) return 'gold';
+  return 'bronze';
+}
+
+const TIER_META = {
+  challenger:{ label:'Challenger', hex:'#f3d18e', badge:'👑' },
+  diamond:{ label:'Diamond', hex:'#79d3f0', badge:'💎' },
+  gold:{ label:'Gold', hex:'#e0b64f', badge:'🥇' },
+  bronze:{ label:'Bronze', hex:'#b5793f', badge:'🥉' }
+};
+
+/* 66 Unique Animal Identifiers */
+const ANIMAL_NAMES = [
+  "koi-fish", "shark", "lion", "wolf", "eagle-head", "bear", "tiger", "owl", "elephant", "fox", "deer", "penguin", "turtle", "octopus", "dolphin", "panda", "monkey", "camel", "kangaroo", "rhino", "giraffe", "zebra", "gorilla", "crocodile", "snake", "frog", "bat", "spider", "crab", "scorpion", "butterfly", "bee", "snail", "seahorse", "starfish", "jellyfish", "squid", "lobster", "pelican", "flamingo", "swan", "duck", "pigeon", "parrot", "peacock", "toucan", "ostrich", "koala", "sloth", "beaver", "squirrel", "hedgehog", "raccoon", "badger", "walrus", "seal", "chicken", "pig", "cow", "sheep", "goat", "horse", "rabbit", "mouse", "cat", "dog"
+];
+
+/* MAPPED IMAGES */
+const CUSTOM_IMAGES = {
+  "Suraj Kamerkar": "static/suraj_01.jpg",
+  "Umesh Gawde": "static/umesh_gawade_01.jpg",
+  "Umesh Tank": "static/umesh_tank_01.jpg",
+  "Vibhuti Dabholkar": "static/vibhuti_01.jpg",
+  "Vijay Chinkate": "static/vijay_chinkate_01.jpg",
+  "Vijay Sangale": "static/vijay_sangale_01.jpg",
+  "Vishal Dubey": "static/vishal_dubey_01.jpg",
+  "Vishal Shinde": "static/vishal_shinde_01.jpg",
+  "Wilfred D'silva": "static/wilfred_01.jpg"
+};
+
+function hexAvatar(name, tier, size){
+  const meta = TIER_META[tier];
+  let imgUrl = "";
+  
+  if(CUSTOM_IMAGES[name]){
+    imgUrl = CUSTOM_IMAGES[name];
+  } else {
+    // Assign a unique animal using the player's exact index in the ALL_PARTICIPANTS array
+    const participantIndex = ALL_PARTICIPANTS.indexOf(name);
+    const safeIndex = participantIndex !== -1 ? participantIndex : (hashStr(name) % ANIMAL_NAMES.length);
+    const animalSlug = ANIMAL_NAMES[safeIndex % ANIMAL_NAMES.length];
+    imgUrl = `https://img.icons8.com/color/256/${animalSlug}.png`;
+  }
+  
+  const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=transparent&color=f3ead8`;
+
+  return `<div class="hex-frame" style="background:${meta.hex};${size?`width:${size}px;`:''}">
+    <div class="hex-inner">
+      <img src="${imgUrl}" alt="${name}" style="width:100%; height:100%;" onerror="this.src='${fallbackUrl}'" />
+    </div>
+    <div class="rank-badge" style="background:${meta.hex}; color:#0a0c12;">${meta.badge}</div>
+  </div>`;
+}
+
+/* Over 40 unique quotes entirely focused on dominating, winning, and earning trophies */
+const QUOTE_BANK = [
+  "Victory isn't an option, it's a habit.",
+  "First place is the only place.",
+  "I don't play to participate; I play to dominate.",
+  "Trophies belong in my cabinet.",
+  "They played the game; I mastered it.",
+  "Winning is my signature.",
+  "Another tournament, another trophy.",
+  "I came, I saw, I conquered.",
+  "Gold is my favorite color.",
+  "Champions aren't made, they are born.",
+  "Second place is just the first loser.",
+  "I leave no room for doubt, only victory.",
+  "The MVP title was made for me.",
+  "I don't sweat the competition; I am the competition.",
+  "Greatness is a standard, not a goal.",
+  "I don't lose. I either win or I learn.",
+  "The throne is mine by right.",
+  "I am the architect of my own victories.",
+  "Losing is a concept I refuse to understand.",
+  "Every match is a masterclass.",
+  "My legacy is built on gold.",
+  "I didn't just break records, I shattered them.",
+  "To challenge me is to accept defeat.",
+  "I write history with every win.",
+  "You can't spell victory without my name.",
+  "Excellence is my baseline.",
+  "A champion's mindset never rests.",
+  "My stat sheet speaks for itself.",
+  "I dictate the pace, I determine the outcome.",
+  "Undefeated in spirit, unmatched in skill.",
+  "Trophies are just souvenirs of my greatness.",
+  "I set the bar, then I raised it.",
+  "Why be a king when you can be a god of the game?",
+  "The pinnacle of competition.",
+  "Winning is simply a reflex.",
+  "I turn pressure into championships.",
+  "Born to win, destined to lead.",
+  "I demand perfection and deliver victory.",
+  "They hoped for a chance; I gave them a lesson.",
+  "I am the benchmark of success."
+];
+function quoteFor(name){ return QUOTE_BANK[hashStr(name) % QUOTE_BANK.length]; }
+
+document.getElementById('statStrip').innerHTML = `
+  <div class="stat"><b>${TOURNAMENTS.length}</b><span>Editions Played</span></div>
+  <div class="stat"><b>${ALL_PARTICIPANTS.length}</b><span>Players Involved</span></div>
+  <div class="stat"><b>${new Set(TOURNAMENTS.flatMap(t=>t.events.map(e=>e.event))).size}+</b><span>Events Contested</span></div>
+  <div class="stat"><b>${TOURNAMENTS.length}</b><span>Championship Titles</span></div>
+`;
+
+const cabinetRow = document.getElementById('cabinetRow');
+TOURNAMENTS.forEach(t=>{
+  const {winners: mvpWinners, count: mvpCount} = computeYearMVP(t);
+  const mvpItems = t.events.map(ev=>{
+    const who = ev.team ? `<span class="who team">${ev.team}</span>` : `<span class="who">${ev.winners.join(' &amp; ')}</span>`;
+    return `<li><span class="ev">${ev.event}</span>${who}</li>`;
+  }).join('');
+  const el = document.createElement('div');
+  el.className = 'case';
+  el.innerHTML = `
+    <div class="case-top">
+      <div class="trophy-mark">${t.icon}</div>
+      <div class="case-year">${t.year}</div>
+      <div class="case-title">${t.label}</div>
+      <div class="case-edition">${t.edition}</div>
+      <div class="champion-line"><span style="font-size:20px;line-height:1;">🏆</span><span><b>Champion</b><span class="team-name">${t.champion.team}</span></span></div>
+      <div class="mvp-highlight"><span style="font-size:20px;line-height:1;">🥇</span><span><b>Year MVP</b><span class="mvp-names">${mvpWinners.join(' &amp; ')}</span><span class="mvp-count">${mvpCount} event${mvpCount>1?'s':''} won</span></span></div>
+    </div>
+    <div class="case-body">
+      <div class="mvp-label">🎖 Event Champions</div>
+      <ul class="mvp-list">${mvpItems}</ul>
+    </div>
+    <button class="case-toggle" type="button"><span class="txt">View full championship roster</span><span class="chev">▾</span></button>
+    <div class="roster">
+      <div class="roster-label">${t.champion.team} &middot; ${t.champion.members.length} players</div>
+      <div class="roster-grid">${t.champion.members.map(m=>`<span>${m}</span>`).join('')}</div>
+    </div>
+  `;
+  const btn = el.querySelector('.case-toggle');
+  btn.addEventListener('click', ()=>{
+    el.classList.toggle('open');
+    btn.querySelector('.txt').textContent = el.classList.contains('open') ? 'Close case' : 'View full championship roster';
+  });
+  cabinetRow.appendChild(el);
+});
+
+function buildRecord(name){
+  const p = players[name];
+  const years = new Set([...p.championships.map(c=>c.year), ...p.events.map(m=>m.year)]);
+  return { name, ...p, years:[...years].sort(), tier: tierFor(p) };
+}
+
+/* WOF Roster strictly filtered to players who have won an individual event */
+const roster = Object.keys(players).map(buildRecord)
+  .filter(p => p.events.length > 0)
+  .sort((a,b)=> (b.championships.length*3+b.yearMVP.length*2+b.events.length) - (a.championships.length*3+a.yearMVP.length*2+a.events.length) || a.name.localeCompare(b.name));
+
+let activeYear = 'all';
+let activeQuery = '';
+const years = [...new Set(TOURNAMENTS.map(t=>t.year))].sort();
+yearChips.innerHTML = `<button class="chip active" data-year="all">All Years</button>` + years.map(y=>`<button class="chip" data-year="${y}">${y}</button>`).join('');
+yearChips.addEventListener('click', e=>{
+  const btn = e.target.closest('.chip'); if(!btn) return;
+  yearChips.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  activeYear = btn.dataset.year;
+  renderGrid();
+});
+searchInput.addEventListener('input', e=>{ activeQuery = e.target.value.trim().toLowerCase(); renderGrid(); });
+
+function renderGrid(){
+  const filtered = roster.filter(p=>{
+    const matchesYear = activeYear==='all' || p.years.includes(Number(activeYear));
+    const matchesQuery = !activeQuery || p.name.toLowerCase().includes(activeQuery);
+    return matchesYear && matchesQuery;
+  });
+  wofGrid.innerHTML = '';
+  noResults.style.display = filtered.length ? 'none' : 'block';
+  filtered.forEach(p=>{
+    const meta = TIER_META[p.tier];
+    const tagline = p.championships.length ? `Champion &middot; ${p.championships.map(c=>c.year).join(', ')}` : `${p.events.length} event${p.events.length===1?'':'s'} won`;
+    const card = document.createElement('div');
+    card.className = 'pcard';
+    card.innerHTML = `
+      ${p.championships.length ? '<div class="champ-ribbon">Champion</div>' : ''}
+      ${hexAvatar(p.name, p.tier)}
+      <div class="tier-chip" style="background:${meta.hex}22; color:${meta.hex}; border:1px solid ${meta.hex}66;">${meta.badge} ${meta.label}</div>
+      <div class="pcard-name">${p.name}</div>
+      <div class="pcard-tag">${tagline}</div>
+      <div class="pcard-stats">
+        <div><b>${p.championships.length}</b>Champion</div>
+        <div><b>${p.yearMVP.length}</b>MVP</div>
+        <div><b>${p.events.length}</b>Events</div>
+      </div>
+    `;
+    card.addEventListener('click', function(){
+      // Adding Slot-Up click animation
+      this.classList.add('slotting');
+      setTimeout(() => {
+        this.classList.remove('slotting');
+        openModal(p);
+      }, 350);
+    });
+    wofGrid.appendChild(card);
+  });
+}
+renderGrid();
+
+const overlay = document.getElementById('overlay');
+const modal = document.getElementById('modal');
+function openModal(p){
+  const meta = TIER_META[p.tier];
+  const teamBadges = p.championships.map(c=>`<span class="badge gold">🏆 ${c.team} &middot; ${c.year}</span>`).join('');
+  const mvpBadges = p.yearMVP.map(m=>`<span class="badge gold">🥇 ${m.edition} &middot; ${m.year}</span>`).join('');
+  const eventRows = p.events.length
+    ? p.events.map(m=>`<div class="award-row"><span class="ev">${m.event}</span><span class="yr">${m.year}</span></div>`).join('')
+    : `<div class="award-row"><span class="ev">No individual events yet.</span></div>`;
+  
+  modal.style.animation = 'none';
+  modal.offsetHeight; 
+  modal.style.animation = null; 
+
+  /* Editions stat removed from modal-stats block below */
+  modal.innerHTML = `
+    <button class="modal-close" id="closeBtn">&times;</button>
+    <div class="modal-top">
+      ${hexAvatar(p.name, p.tier)}
+      <div class="tier-chip" style="background:${meta.hex}22; color:${meta.hex}; border:1px solid ${meta.hex}66;">${meta.badge} ${meta.label}</div>
+      <div class="modal-name">${p.name}</div>
+      <div class="modal-quote">&ldquo;${quoteFor(p.name)}&rdquo;</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-stats">
+          <div><b>${p.championships.length}</b><span>Champion</span></div>
+          <div><b>${p.yearMVP.length}</b><span>MVP</span></div>
+          <div><b>${p.events.length}</b><span>Events</span></div>
+        </div>
+      </div>
+      ${p.championships.length ? `<div class="modal-section"><h4>Championship Teams</h4><div class="badge-row">${teamBadges}</div></div>` : ''}
+      ${p.yearMVP.length ? `<div class="modal-section"><h4>Year MVP Awards</h4><div class="badge-row">${mvpBadges}</div></div>` : ''}
+      <div class="modal-section"><h4>Events Won</h4>${eventRows}</div>
+      <div class="modal-section"><h4>Years Active</h4><div class="badge-row">${p.years.map(y=>`<span class="badge">${y}</span>`).join('')}</div></div>
+    </div>
+  `;
+  overlay.classList.add('show');
+  modal.querySelector('#closeBtn').addEventListener('click', closeModal);
+}
+function closeModal(){ overlay.classList.remove('show'); }
+overlay.addEventListener('click', e=>{ if(e.target===overlay) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+const lineupGrid = document.getElementById('lineupGrid');
+const yearIcon = {}; TOURNAMENTS.forEach(t=> yearIcon[t.year] = t.icon);
+
+const fullRoster = ALL_PARTICIPANTS.map(buildRecord)
+  .sort((a,b)=> (b.championships.length*3+b.yearMVP.length*2+b.events.length) - (a.championships.length*3+a.yearMVP.length*2+a.events.length) || a.name.localeCompare(b.name));
+
+fullRoster.forEach(p=>{
+  const meta = TIER_META[p.tier];
+  const trophies = p.years.map(y=>`<span title="${y}">${yearIcon[y]}</span>`).join('');
+  const el = document.createElement('div');
+  el.className = 'roster-card';
+  
+  /* Added roster-name below the hexAvatar */
+  el.innerHTML = `
+    ${hexAvatar(p.name, p.tier)}
+    <div class="roster-name" title="${p.name}">${p.name}</div>
+    <div class="roster-trophies">${trophies}</div>
+    <div class="roster-tooltip">
+      <div class="tt-name">${p.name}</div>
+      <div class="tt-tier" style="color:${meta.hex};">${meta.badge} ${meta.label}</div>
+      <div class="tt-stats">
+        <div><b>${p.championships.length}</b>Champ</div>
+        <div><b>${p.yearMVP.length}</b>MVP</div>
+        <div><b>${p.events.length}</b>Events</div>
+      </div>
+    </div>
+  `;
+  el.addEventListener('click', ()=>{ if(p.years.length) openModal(p); });
+  lineupGrid.appendChild(el);
+});
+
+const legendEl = document.getElementById('lineupLegend');
+legendEl.innerHTML = Object.keys(TIER_META).map(k=>{
+  const m = TIER_META[k];
+  return `<span><i style="background:${m.hex}; border-radius:50%; display:inline-block; width:10px; height:10px;"></i>${m.label}</span>`;
+}).join('');
+
+const spot = document.getElementById('spotlight');
+window.addEventListener('pointermove', e=>{
+  spot.style.setProperty('--mx', e.clientX+'px');
+  spot.style.setProperty('--my', e.clientY+'px');
+});
+</script>
+</body>
+</html>
+"""
+
+# Render the HTML using Streamlit components
+components.html(html_code, height=3500, scrolling=True)
