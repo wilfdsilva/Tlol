@@ -1,12 +1,38 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Configure the Streamlit page
+# Configure the Streamlit page for maximum width
 st.set_page_config(
     page_title="The TLOL Trophy Hall",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+# Inject CSS into Streamlit to remove extra scrollbars, padding, and make the iframe fullscreen
+st.markdown("""
+    <style>
+        /* Remove Streamlit's default padding and max-width constraints */
+        .block-container {
+            padding: 0rem !important;
+            max-width: 100% !important;
+        }
+        /* Hide the top Streamlit header/chrome */
+        header[data-testid="stHeader"] {
+            display: none !important;
+        }
+        /* Force the iframe to take the full viewport height to eliminate double scrollbars */
+        iframe {
+            height: 100vh !important;
+            width: 100% !important;
+            border: none !important;
+            display: block;
+        }
+        /* Disable scrolling on the main Streamlit body */
+        body, html {
+            overflow: hidden !important; 
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 # The updated HTML, CSS, and JS code
 html_code = """
@@ -49,6 +75,7 @@ html_code = """
     color:var(--cream);
     font-family:'Inter',sans-serif;
     -webkit-font-smoothing:antialiased;
+    overflow-x: hidden;
   }
   ::selection{background:var(--gold); color:#1a1200;}
   a{color:inherit;}
@@ -60,7 +87,7 @@ html_code = """
   }
 
   header{
-    position:relative; padding:90px 6vw 70px; text-align:center; overflow:hidden;
+    position:relative; padding:90px 4vw 70px; text-align:center; overflow:hidden;
     border-bottom:1px solid var(--line);
   }
   header::before, header::after{
@@ -94,14 +121,15 @@ html_code = """
   .stat b{display:block; font-family:'Bebas Neue',sans-serif; font-size:34px; color:var(--gold-bright); letter-spacing:0.03em;}
   .stat span{font-size:11px; text-transform:uppercase; letter-spacing:0.14em; color:var(--muted);}
 
-  section.block{padding:80px 6vw; max-width:1400px; margin:0 auto;}
+  /* Widened block boundaries */
+  section.block{padding:80px 4vw; max-width:1800px; margin:0 auto;}
   .block-head{margin-bottom:44px; text-align:center;}
   .block-head .kicker{font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--maroon-bright); font-weight:700; margin-bottom:10px;}
   .block-head h2{font-family:'Bebas Neue',sans-serif; font-size:clamp(34px,5vw,54px); letter-spacing:0.03em; margin:0 0 12px;}
   .block-head p{color:var(--muted); max-width:620px; margin:0 auto; font-size:15px; line-height:1.6;}
 
   /* ---------- Trophy Cabinet ---------- */
-  .cabinet-row{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:28px;}
+  .cabinet-row{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:28px;}
   .case{position:relative; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.35);}
   .case-top{padding:26px 26px 20px; background:linear-gradient(160deg, rgba(124,36,56,0.5), rgba(124,36,56,0) 60%), radial-gradient(circle at 85% 0%, rgba(10,200,185,0.14), transparent 55%); border-bottom:1px dashed var(--line); position:relative;}
   .case-year{font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.25em; color:var(--gold-bright); text-transform:uppercase;}
@@ -132,7 +160,7 @@ html_code = """
   .case-toggle .chev{transition:transform .25s ease;}
   .case.open .case-toggle .chev{transform:rotate(180deg);}
   .roster{max-height:0; overflow:hidden; transition:max-height .35s ease; padding:0 26px;}
-  .case.open .roster{max-height:400px; padding:16px 26px 22px;}
+  .case.open .roster{max-height:500px; padding:16px 26px 22px;}
   .roster-label{font-size:10.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); margin-bottom:10px;}
   .roster-grid{display:flex; flex-wrap:wrap; gap:8px;}
   .roster-grid span{background:rgba(255,255,255,0.04); border:1px solid var(--line); padding:6px 11px; border-radius:20px; font-size:12.5px;}
@@ -168,51 +196,42 @@ html_code = """
   .pcard-name{font-weight:700; font-size:15.5px; margin-bottom:4px;}
   .pcard-tag{font-size:11.5px; color:var(--muted); margin-bottom:12px;}
   
-  /* Stat Squares */
   .pcard-stats, .modal-stats, .tt-stats{display:flex; justify-content:center; gap:10px; font-size:10.5px; color:var(--muted);}
   .pcard-stats div, .modal-stats div, .tt-stats div {
-    flex: 1;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 6px;
+    flex: 1; aspect-ratio: 1 / 1; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; background: rgba(255,255,255,0.03); border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px;
   }
   .pcard-stats b, .modal-stats b, .tt-stats b {display:block; color:var(--gold-bright); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.02em; line-height:1;}
   
   .champ-ribbon{position:absolute; top:12px; right:-32px; transform:rotate(40deg); background:var(--maroon); color:var(--gold-bright); font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:4px 38px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:3;}
   .no-results{text-align:center; color:var(--muted); padding:40px 0; font-size:14px; display:none;}
 
-  /* Slot Up Click Animation for Cards */
-  @keyframes slotUpCard {
-    0% { transform: translateY(0) scale(1.03); opacity: 1; }
-    100% { transform: translateY(-80px) scale(1.05); opacity: 0; }
+  /* Fixed Click Animation for Cards - Smooth Press instead of glitchy exit */
+  @keyframes cardPress {
+    0% { transform: translateY(-8px) scale(1.03); }
+    50% { transform: translateY(0px) scale(0.96); border-color: var(--hextech); }
+    100% { transform: translateY(-8px) scale(1.03); border-color: var(--hextech); }
   }
   .pcard.slotting {
-    animation: slotUpCard 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation: cardPress 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     pointer-events: none;
   }
 
-  /* ---------- Chapter 3: Full roster grid ---------- */
+  /* ---------- Chapter 3: Full roster grid (Fluid Auto-fill width) ---------- */
   .lineup-grid{
-    display:grid; grid-template-columns:repeat(8, 1fr); gap:22px 14px;
+    display:grid; 
+    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); 
+    gap:26px 14px;
+    justify-content: center;
   }
   .roster-card{position:relative; text-align:center; cursor:pointer;}
-  .roster-card .avatar-frame{transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+  .roster-card .avatar-frame{transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin: 0 auto; width: 90px;}
   .roster-card:hover .avatar-frame{transform:translateY(-6px) scale(1.08);}
   .roster-name{
-    font-size: 11.5px;
-    font-weight: 600;
-    color: var(--cream);
-    margin-top: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 4px;
+    font-size: 11.5px; font-weight: 600; color: var(--cream);
+    margin-top: 10px; white-space: nowrap; overflow: hidden;
+    text-overflow: ellipsis; padding: 0 4px;
   }
   .roster-trophies{display:flex; justify-content:center; gap:4px; margin-top:4px; min-height:16px; font-size:13px;}
   .roster-tooltip{
@@ -226,12 +245,10 @@ html_code = """
   .roster-tooltip .tt-name{font-weight:800; font-size:14px; margin-bottom:6px;}
   .roster-tooltip .tt-tier{font-size:10px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; display:inline-flex; align-items:center; gap:4px;}
   .roster-tooltip .tt-stats b{font-size:18px;}
-  .lineup-legend{display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:44px; font-size:11.5px; color:var(--muted);}
+  .lineup-legend{display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:50px; font-size:11.5px; color:var(--muted);}
   .lineup-legend span{display:inline-flex; align-items:center; gap:6px;}
 
-  @media (max-width:1100px){ .lineup-grid{grid-template-columns:repeat(6,1fr);} }
-  @media (max-width:760px){ .lineup-grid{grid-template-columns:repeat(4,1fr); gap:26px 10px;} }
-  @media (max-width:460px){ .lineup-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:760px){ .lineup-grid{grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:20px 8px;} }
 
   /* ---------- Modal ---------- */
   .overlay{position:fixed; inset:0; background:rgba(6,7,11,0.78); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; z-index:50; padding:24px;}
@@ -239,8 +256,8 @@ html_code = """
   .modal{width:100%; max-width:480px; max-height:88vh; overflow-y:auto; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:20px; position:relative; box-shadow:0 30px 80px rgba(0,0,0,0.6); animation:popBounce .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;}
   
   @keyframes popBounce{
-    0% { transform: translateY(150px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% { transform: translateY(80px) scale(0.95); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
   }
   
   .modal-close{position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--line); color:var(--cream); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: transform 0.2s, background 0.2s;}
@@ -263,11 +280,6 @@ html_code = """
 
   footer{text-align:center; padding:50px 6vw 60px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line);}
   footer b{color:var(--gold-bright);}
-
-  @media (max-width:520px){
-    header{padding:70px 5vw 50px;}
-    section.block{padding:56px 5vw;}
-  }
 </style>
 </head>
 <body>
@@ -441,7 +453,7 @@ function roundAvatar(name, tier, size){
   const exactName = encodeURIComponent(name);
   const imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${exactName}.jpg`;
   
-  // Fallback text color set to 0a0c12 (dark slate) so it remains clearly visible against gold/diamond backgrounds
+  // Fallback text color set to 0a0c12 (dark slate) so it remains clearly visible
   const fallbackUrl = `https://ui-avatars.com/api/?name=${exactName}&background=transparent&color=0a0c12&bold=true`;
 
   return `<div class="avatar-frame" style="background:${meta.hex};${size?`width:${size}px;`:''}">
@@ -452,7 +464,6 @@ function roundAvatar(name, tier, size){
   </div>`;
 }
 
-/* Over 40 unique quotes entirely focused on dominating, winning, and earning trophies */
 const QUOTE_BANK = [
   "Victory isn't an option, it's a habit.",
   "First place is the only place.",
@@ -549,7 +560,6 @@ function buildRecord(name){
   return { name, ...p, years:[...years].sort(), tier: tierFor(p) };
 }
 
-/* WOF Roster strictly filtered to players who have won an individual event */
 const roster = Object.keys(players).map(buildRecord)
   .filter(p => p.events.length > 0)
   .sort((a,b)=> (b.championships.length*3+b.yearMVP.length*2+b.events.length) - (a.championships.length*3+a.yearMVP.length*2+a.events.length) || a.name.localeCompare(b.name));
@@ -597,7 +607,7 @@ function renderGrid(){
       setTimeout(() => {
         this.classList.remove('slotting');
         openModal(p);
-      }, 350);
+      }, 250); // Synced with the new 0.3s CSS animation
     });
     wofGrid.appendChild(card);
   });
@@ -673,7 +683,6 @@ fullRoster.forEach(p=>{
       </div>
     </div>
   `;
-  // Allow opening modal for all, including rookies
   el.addEventListener('click', ()=>{ openModal(p); });
   lineupGrid.appendChild(el);
 });
@@ -694,5 +703,5 @@ window.addEventListener('pointermove', e=>{
 </html>
 """
 
-# Render the HTML using Streamlit components
-components.html(html_code, height=3500, scrolling=True)
+# Render the HTML component without triggering a scrollbar (using CSS injection instead)
+components.html(html_code, scrolling=False)
