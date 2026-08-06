@@ -419,13 +419,13 @@ window.addEventListener('scroll', () => {
 const TOURNAMENTS = [
   {
     id:'tlol1', label:'TLOL 1', edition:'The Experiment', year:2023, icon:'🧪',
-    champion:{ team:"Tooten Dilon ki Toli", members:["Nisha Saini","Wilfred D'silva","Dhananjay Kulkarni","Suraj Kamerkar","Saurabh Mahadik","Irshad Darji","Pooja Nandoskar","Vishal Shinde","Mayur Pawar","Mahesh Pale","Sanjay Tumma","Gayatri Zuting"] },
+    champion:{ team:"Tooten Dilon ki Toli", members:["Nisha Saini","Wilfred Dsilva","Dhananjay Kulkarni","Suraj Kamerkar","Saurabh Mahadik","Irshad Darji","Pooja Nandoskar","Vishal Shinde","Mayur Pawar","Mahesh Pale","Sanjay Tumma","Gayatri Zuting"] },
     events:[
       {event:"Carrom &middot; Singles", winners:["Jay Jagad"]},
       {event:"Carrom &middot; Doubles", winners:["Saurabh Mahadik","Sanjay Tumma"]},
       {event:"Foosball &middot; Doubles", winners:["Dhananjay Kulkarni","Gayatri Zuting"]},
       {event:"Table Tennis &middot; Singles", winners:["Dhananjay Kulkarni"]},
-      {event:"Table Tennis &middot; Doubles", winners:["Wilfred D'silva","Dhananjay Kulkarni"]},
+      {event:"Table Tennis &middot; Doubles", winners:["Wilfred Dsilva","Dhananjay Kulkarni"]},
       {event:"PS5 &middot; FIFA", winners:["Pritesh Menon"]},
       {event:"PS5 &middot; Racing", winners:["Arijit Ghosh"]},
       {event:"Chess", winners:["Arijit Ghosh"]},
@@ -434,11 +434,11 @@ const TOURNAMENTS = [
   },
   {
     id:'tlol2', label:'TLOL 2', edition:'Avengers Edition', year:2024, icon:'🛡️',
-    champion:{ team:"Team Captain", members:["Wilfred D'silva","Rachita Harit","Amitabh Singh","Pooja Nandoskar","Asif Khan","Vishal Shinde","Kartik Nair","Vishal Dubey","Dhananjay Kulkarni","Bishal Pandit","Adnan Shaikh","Amit Singh","Hitesh Ghadigaonkar","Esakki Shummugavel"] },
+    champion:{ team:"Team Captain", members:["Wilfred Dsilva","Rachita Harit","Amitabh Singh","Pooja Nandoskar","Asif Khan","Vishal Shinde","Kartik Nair","Vishal Dubey","Dhananjay Kulkarni","Bishal Pandit","Adnan Shaikh","Amit Singh","Hitesh Ghadigaonkar","Esakki Shummugavel"] },
     events:[
-      {event:"Pen Fighting", winners:["Wilfred D'silva"]},
+      {event:"Pen Fighting", winners:["Wilfred Dsilva"]},
       {event:"Table Tennis &middot; Doubles", winners:["Adnan Shaikh","Dhananjay Kulkarni"]},
-      {event:"PS5 &middot; Volta Doubles", winners:["Adnan Shaikh","Wilfred D'silva"]},
+      {event:"PS5 &middot; Volta Doubles", winners:["Adnan Shaikh","Wilfred Dsilva"]},
       {event:"Chess", winners:["Arijit Ghosh"]},
       {event:"Carrom &middot; Doubles", winners:["Jay Jagad","Umesh Tank"]},
       {event:"Foosball &middot; Doubles", winners:["Gayatri Zuting","Blessen Thomas"]},
@@ -448,9 +448,9 @@ const TOURNAMENTS = [
   },
   {
     id:'tlol3', label:'TLOL 3', edition:'Bollywood Edition', year:2025, icon:'🎬',
-    champion:{ team:"Badshah Blasters", members:["Somansh Datta","Pritesh Menon","Samiksha Prabhu","Umesh Gawde","Wilfred D'silva","Gayatri Zuting","Hitesh Ghadigaonkar","Kiran Padwal","N Pratap Kumar","Pooja Nandoskar","Saurabh Mahadik","Vijay Chinkate","Vishal Shinde"] },
+    champion:{ team:"Badshah Blasters", members:["Somansh Datta","Pritesh Menon","Samiksha Prabhu","Umesh Gawde","Wilfred Dsilva","Gayatri Zuting","Hitesh Ghadigaonkar","Kiran Padwal","N Pratap Kumar","Pooja Nandoskar","Saurabh Mahadik","Vijay Chinkate","Vishal Shinde"] },
     events:[
-      {event:"Table Tennis &middot; Doubles", winners:["Pritesh Menon","Wilfred D'silva"]},
+      {event:"Table Tennis &middot; Doubles", winners:["Pritesh Menon","Wilfred Dsilva"]},
       {event:"Carrom &middot; Doubles", winners:["Jay Jagad","Umesh Tank"]},
       {event:"Foosball &middot; Doubles", winners:["Blessen Thomas","Asif Khan"]},
       {event:"Chess", winners:["Saurabh Mahadik"]},
@@ -481,7 +481,7 @@ const ALL_PARTICIPANTS = [
   "Sanjay Tumma","Sanket Patil","Sanskar Bagwe","Saurabh Mahadik","Shreejith Menon",
   "Shweta Vichare","Somansh Datta","Suraj Kamerkar","Umesh Gawde","Umesh Tank",
   "Vibhuti Dabholkar","Vijay Chinkate","Vijay Sangale","Vishal Dubey","Vishal Shinde",
-  "Wilfred D'silva", ...NEW_ROOKIES
+  "Wilfred Dsilva", ...NEW_ROOKIES
 ];
 
 function hashStr(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i)) >>> 0; } return h; }
