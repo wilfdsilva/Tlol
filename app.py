@@ -130,6 +130,33 @@ html_code = """
   .block-head h2{font-family:'Bebas Neue',sans-serif; font-size:clamp(34px,5vw,54px); letter-spacing:0.03em; margin:0 0 12px;}
   .block-head p{color:var(--muted); max-width:620px; margin:0 auto; font-size:15px; line-height:1.6;}
 
+  /* ---------- Chapter 1: Story ---------- */
+  .story-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--cream);
+  }
+  .story-line {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+    margin-bottom: 22px;
+  }
+  .story-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .story-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--gold-bright);
+    font-size: 22px;
+    margin: 36px 0;
+  }
+
   /* ---------- Trophy Cabinet ---------- */
   .cabinet-row{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:28px;}
   .case{position:relative; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.35);}
@@ -220,7 +247,7 @@ html_code = """
     pointer-events: none;
   }
 
-  /* ---------- Chapter 3: Full roster grid (Fluid Auto-fill width) ---------- */
+  /* ---------- Chapter 4: Full roster grid (Fluid Auto-fill width) ---------- */
   .lineup-grid{
     display:grid; 
     grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); 
@@ -291,13 +318,36 @@ html_code = """
 <header>
   <div class="eyebrow">Est. 2023 &middot; Office Games Hall of Fame</div>
   <h1>THE TLOL<br>TROPHY HALL</h1>
-  <p class="subhead">Three editions. One rivalry that never sat down. This is where every champion, every MVP, and every ridiculous team name earns a permanent plaque.</p>
   <div class="stat-strip" id="statStrip"></div>
 </header>
 
-<section class="block" id="cabinet">
+<section class="block" id="story">
   <div class="block-head">
     <div class="kicker">Chapter One</div>
+    <h2>The Legend of TCOE League of Legends</h2>
+  </div>
+  <div class="story-container" id="storyContainer">
+    <p class="story-line">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
+    <p class="story-line">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
+    <p class="story-line">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
+    <div class="story-line story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</div>
+    <p class="story-line">From that question, a magical quest began.</p>
+    <p class="story-line">The fellowship discovered that the kingdom needed more than work. It needed friendship, teamwork, wellness, leadership, laughter, and a stronger sense of belonging.</p>
+    <p class="story-line">So they set out to create something that would unite everyone.</p>
+    <p class="story-line">But the journey was not easy.</p>
+    <p class="story-line">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
+    <p class="story-line">Yet with every obstacle, more volunteers joined the quest, proving that the greatest strength of the kingdom was its people.</p>
+    <p class="story-line">At last, the fellowship unveiled The TCOE League of Legends.</p>
+    <p class="story-line">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
+    <p class="story-line">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
+    <p class="story-line">And so, every new season begins with the same timeless invitation:</p>
+    <div class="story-line story-quote">"The next chapter of the legend is waiting... Will you become one of them?"</div>
+  </div>
+</section>
+
+<section class="block" id="cabinet">
+  <div class="block-head">
+    <div class="kicker">Chapter Two</div>
     <h2>Yearly Trophy Cabinet</h2>
     <p>Every edition, glassed in. The Year MVP is whoever won the most events that year &mdash; tap a case to open the full winning roster.</p>
   </div>
@@ -306,7 +356,7 @@ html_code = """
 
 <section class="block" id="wof">
   <div class="block-head">
-    <div class="kicker">Chapter Two</div>
+    <div class="kicker">Chapter Three</div>
     <h2>Walk of Fame</h2>
     <p>Every player who ever left the TLOL floor with a trophy, styled as a Rift-ready summoner icon &mdash; rank border generated from their stats. Click a card for the full story.</p>
   </div>
@@ -320,7 +370,7 @@ html_code = """
 
 <section class="block" id="lineup">
   <div class="block-head">
-    <div class="kicker">Chapter Three</div>
+    <div class="kicker">Chapter Four</div>
     <h2>The Full Roster Line-Up</h2>
     <p>Every single person who's ever played TLOL, ranked by stats &mdash; strongest record first. Hover anyone to see who they are and what they won.</p>
   </div>
@@ -338,6 +388,40 @@ html_code = """
 </div>
 
 <script>
+/* ============ STORY ANIMATION ============ */
+const storyLines = document.querySelectorAll('.story-line');
+let storyTimeouts = [];
+let storyAnimationFinished = false;
+let scrollTriggered = false;
+
+function startStoryAnimation() {
+  storyLines.forEach((line, index) => {
+    const t = setTimeout(() => {
+      line.classList.add('visible');
+      if(index === storyLines.length - 1) storyAnimationFinished = true;
+    }, index * 1200); // Wait 1.2s between each line
+    storyTimeouts.push(t);
+  });
+}
+
+function skipStoryAnimation() {
+  if (storyAnimationFinished || scrollTriggered) return;
+  scrollTriggered = true;
+  storyTimeouts.forEach(clearTimeout);
+  storyLines.forEach(line => line.classList.add('visible'));
+  storyAnimationFinished = true;
+}
+
+// Start animation shortly after load
+setTimeout(startStoryAnimation, 500);
+
+// If the user scrolls AT ALL, instantly reveal the rest of the text
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) {
+        skipStoryAnimation();
+    }
+});
+
 /* ============ RAW TOURNAMENT DATA ============ */
 const TOURNAMENTS = [
   {
@@ -705,5 +789,4 @@ window.addEventListener('pointermove', e=>{
 </html>
 """
 
-# CRITICAL FIX: Add scrolling=True so the iframe generates an internal scrollbar
 components.html(html_code, scrolling=True)
