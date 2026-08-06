@@ -8,7 +8,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# The updated HTML, CSS, and JS code with the image mapping
+# The updated HTML, CSS, and JS code
 html_code = """
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +36,7 @@ html_code = """
     --t-diamond:#79d3f0;
     --t-gold:#e0b64f;
     --t-bronze:#b5793f;
-    --hex-clip: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0% 50%);
+    --t-rookie:#8a93a6;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -137,12 +137,12 @@ html_code = """
   .roster-grid{display:flex; flex-wrap:wrap; gap:8px;}
   .roster-grid span{background:rgba(255,255,255,0.04); border:1px solid var(--line); padding:6px 11px; border-radius:20px; font-size:12.5px;}
 
-  /* ---------- Hex avatar frame ---------- */
-  .hex-frame{position:relative; width:100%; aspect-ratio:1; clip-path:var(--hex-clip); flex-shrink:0;}
-  .hex-inner{position:absolute; inset:4px; clip-path:var(--hex-clip); background:transparent; overflow:hidden;}
-  .hex-inner img{transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); object-fit: cover; object-position: center;}
+  /* ---------- Round avatar frame ---------- */
+  .avatar-frame{position:relative; width:100%; aspect-ratio:1; border-radius:50%; flex-shrink:0;}
+  .avatar-inner{position:absolute; inset:4px; border-radius:50%; background:transparent; overflow:hidden;}
+  .avatar-inner img{transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)); object-fit: cover; object-position: center;}
   .rank-badge{
-    position:absolute; bottom:-6px; right:-6px; width:26px; height:26px; border-radius:50%;
+    position:absolute; bottom:0px; right:0px; width:26px; height:26px; border-radius:50%;
     display:flex; align-items:center; justify-content:center; font-size:13px;
     border:2px solid #0a0c12; box-shadow:0 4px 10px rgba(0,0,0,0.6); z-index:2;
   }
@@ -162,8 +162,8 @@ html_code = """
   .pcard::before{content:""; position:absolute; inset:0; background:radial-gradient(160px 100px at 50% -10%, rgba(10,200,185,0.16), transparent 60%); opacity:0; transition:opacity .25s ease;}
   .pcard:hover{transform:translateY(-8px) scale(1.03); border-color:var(--hextech); box-shadow:0 22px 45px rgba(0,0,0,0.5);}
   .pcard:hover::before{opacity:1;}
-  .pcard:hover .hex-inner img{transform: scale(1.15);}
-  .pcard .hex-frame{width:104px; margin:0 auto 14px;}
+  .pcard:hover .avatar-inner img{transform: scale(1.15);}
+  .pcard .avatar-frame{width:104px; margin:0 auto 14px;}
   .tier-chip{display:inline-flex; align-items:center; gap:4px; font-size:9.5px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:3px 10px; border-radius:20px; margin-bottom:8px;}
   .pcard-name{font-weight:700; font-size:15.5px; margin-bottom:4px;}
   .pcard-tag{font-size:11.5px; color:var(--muted); margin-bottom:12px;}
@@ -202,8 +202,8 @@ html_code = """
     display:grid; grid-template-columns:repeat(8, 1fr); gap:22px 14px;
   }
   .roster-card{position:relative; text-align:center; cursor:pointer;}
-  .roster-card .hex-frame{transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
-  .roster-card:hover .hex-frame{transform:translateY(-6px) scale(1.08);}
+  .roster-card .avatar-frame{transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+  .roster-card:hover .avatar-frame{transform:translateY(-6px) scale(1.08);}
   .roster-name{
     font-size: 11.5px;
     font-weight: 600;
@@ -246,7 +246,7 @@ html_code = """
   .modal-close{position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--line); color:var(--cream); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: transform 0.2s, background 0.2s;}
   .modal-close:hover{background:var(--maroon); border-color:var(--maroon); transform:rotate(90deg);}
   .modal-top{padding:34px 28px 22px; text-align:center; background:radial-gradient(220px 140px at 50% 0%, rgba(10,200,185,0.12), transparent 65%); border-bottom:1px dashed var(--line);}
-  .modal-top .hex-frame{width:140px; margin:0 auto 16px;}
+  .modal-top .avatar-frame{width:140px; margin:0 auto 16px;}
   .modal-name{font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:0.02em; margin-top:8px;}
   .modal-quote{font-family:'Fraunces',serif; font-style:italic; color:var(--gold-bright); font-size:14.5px; margin-top:10px; line-height:1.5;}
   .modal-body{padding:22px 28px 30px;}
@@ -370,7 +370,28 @@ const TOURNAMENTS = [
   }
 ];
 
-const ALL_PARTICIPANTS = ["Adnan Shaikh","Amit Singh","Amitabh Singh","Ankit Yadav","Arijit Ghosh","Arvind Arumuga Nainar","Asif Khan","Ashna Kumar","Avinash Chorage","Avinash Gowda","Bhagyashree Dhotre","Bhaskar Patil","Bijal Gala","Bishal Pandit","Blessen Thomas","Darshil Vekaria","Dhananjay Kulkarni","Esakki Shummugavel","Gayatri Zuting","Gurpreet Kaur","Hitesh Ghadigaonkar","Irshad Darji","Jay Jagad","Jincy Geevarghese","John Yesudasan","Johnson Thomas","Kartik Nair","Kiran Padwal","Kishansingh Devda","Komal Panjwani","Kshitij Wadankar","Lalit Chavan","Mahesh Pale","Mayur Pawar","N Pratap Kumar","Nilesh Mulik","Nilesh Sansare","Nisha Saini","Pooja Nandoskar","Prachi Dalvi","Pramod Patel","Pritam Paparkar","Pritesh Menon","Rachita Harit","Rahul Arjun","Rahul Pokharkar","Ravi Chavan","Ravi Khanra","Samiksha Prabhu","Sanjay Tumma","Sanket Patil","Sanskar Bagwe","Saurabh Mahadik","Shreejith Menon","Shweta Vichare","Somansh Datta","Suraj Kamerkar","Umesh Gawde","Umesh Tank","Vibhuti Dabholkar","Vijay Chinkate","Vijay Sangale","Vishal Dubey","Vishal Shinde","Wilfred D'silva"];
+const NEW_ROOKIES = [
+  "Esha Patel", "Parth Passi", "Kaumod Bagale", "Jagruti Chaudhari", 
+  "Darshan Walwatkar", "Pritam Purohit", "Akhilesh Rai", 
+  "Soujanya Siripuram", "Yogesh Karande", "Chandrajit Yadav"
+];
+
+const ALL_PARTICIPANTS = [
+  "Adnan Shaikh","Amit Singh","Amitabh Singh","Ankit Yadav","Arijit Ghosh",
+  "Arvind Arumuga Nainar","Asif Khan","Ashna Kumar","Avinash Chorage","Avinash Gowda",
+  "Bhagyashree Dhotre","Bhaskar Patil","Bijal Gala","Bishal Pandit","Blessen Thomas",
+  "Darshil Vekaria","Dhananjay Kulkarni","Esakki Shummugavel","Gayatri Zuting",
+  "Gurpreet Kaur","Hitesh Ghadigaonkar","Irshad Darji","Jay Jagad","Jincy Geevarghese",
+  "John Yesudasan","Johnson Thomas","Kartik Nair","Kiran Padwal","Kishansingh Devda",
+  "Komal Panjwani","Kshitij Wadankar","Lalit Chavan","Mahesh Pale","Mayur Pawar",
+  "N Pratap Kumar","Nilesh Mulik","Nilesh Sansare","Nisha Saini","Pooja Nandoskar",
+  "Prachi Dalvi","Pramod Patel","Pritam Paparkar","Pritesh Menon","Rachita Harit",
+  "Rahul Arjun","Rahul Pokharkar","Ravi Chavan","Ravi Khanra","Samiksha Prabhu",
+  "Sanjay Tumma","Sanket Patil","Sanskar Bagwe","Saurabh Mahadik","Shreejith Menon",
+  "Shweta Vichare","Somansh Datta","Suraj Kamerkar","Umesh Gawde","Umesh Tank",
+  "Vibhuti Dabholkar","Vijay Chinkate","Vijay Sangale","Vishal Dubey","Vishal Shinde",
+  "Wilfred D'silva", ...NEW_ROOKIES
+];
 
 function hashStr(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i)) >>> 0; } return h; }
 
@@ -400,6 +421,7 @@ function tierFor(p){
   if(score >= 6) return 'challenger';
   if(score >= 3) return 'diamond';
   if(score >= 1) return 'gold';
+  if(NEW_ROOKIES.includes(p.name)) return 'rookie';
   return 'bronze';
 }
 
@@ -407,46 +429,24 @@ const TIER_META = {
   challenger:{ label:'Challenger', hex:'#f3d18e', badge:'👑' },
   diamond:{ label:'Diamond', hex:'#79d3f0', badge:'💎' },
   gold:{ label:'Gold', hex:'#e0b64f', badge:'🥇' },
-  bronze:{ label:'Bronze', hex:'#b5793f', badge:'🥉' }
+  bronze:{ label:'Bronze', hex:'#b5793f', badge:'🥉' },
+  rookie:{ label:'Rookie', hex:'#8a93a6', badge:'🌱' }
 };
 
-/* 66 Unique Animal Identifiers */
-const ANIMAL_NAMES = [
-  "koi-fish", "shark", "lion", "wolf", "eagle-head", "bear", "tiger", "owl", "elephant", "fox", "deer", "penguin", "turtle", "octopus", "dolphin", "panda", "monkey", "camel", "kangaroo", "rhino", "giraffe", "zebra", "gorilla", "crocodile", "snake", "frog", "bat", "spider", "crab", "scorpion", "butterfly", "bee", "snail", "seahorse", "starfish", "jellyfish", "squid", "lobster", "pelican", "flamingo", "swan", "duck", "pigeon", "parrot", "peacock", "toucan", "ostrich", "koala", "sloth", "beaver", "squirrel", "hedgehog", "raccoon", "badger", "walrus", "seal", "chicken", "pig", "cow", "sheep", "goat", "horse", "rabbit", "mouse", "cat", "dog"
-];
-
-/* MAPPED IMAGES */
-const CUSTOM_IMAGES = {
-  "Suraj Kamerkar": "static/suraj_01.jpg",
-  "Umesh Gawde": "static/umesh_gawade_01.jpg",
-  "Umesh Tank": "static/umesh_tank_01.jpg",
-  "Vibhuti Dabholkar": "static/vibhuti_01.jpg",
-  "Vijay Chinkate": "static/vijay_chinkate_01.jpg",
-  "Vijay Sangale": "static/vijay_sangale_01.jpg",
-  "Vishal Dubey": "static/vishal_dubey_01.jpg",
-  "Vishal Shinde": "static/vishal_shinde_01.jpg",
-  "Wilfred D'silva": "static/wilfred_01.jpg"
-};
-
-function hexAvatar(name, tier, size){
+/* Pulls avatar from github dynamically using standardized name mapping */
+function roundAvatar(name, tier, size){
   const meta = TIER_META[tier];
-  let imgUrl = "";
   
-  if(CUSTOM_IMAGES[name]){
-    imgUrl = CUSTOM_IMAGES[name];
-  } else {
-    // Assign a unique animal using the player's exact index in the ALL_PARTICIPANTS array
-    const participantIndex = ALL_PARTICIPANTS.indexOf(name);
-    const safeIndex = participantIndex !== -1 ? participantIndex : (hashStr(name) % ANIMAL_NAMES.length);
-    const animalSlug = ANIMAL_NAMES[safeIndex % ANIMAL_NAMES.length];
-    imgUrl = `https://img.icons8.com/color/256/${animalSlug}.png`;
-  }
+  // Create filename matching "esha_patel.jpg" or "wilfred_dsilva.jpg" format
+  const formattedName = name.toLowerCase().replace(/['.]/g, '').replace(/\s+/g, '_');
+  const imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${formattedName}.jpg`;
   
+  // Fallback to UI-Avatars if GitHub image is broken or missing
   const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=transparent&color=f3ead8`;
 
-  return `<div class="hex-frame" style="background:${meta.hex};${size?`width:${size}px;`:''}">
-    <div class="hex-inner">
-      <img src="${imgUrl}" alt="${name}" style="width:100%; height:100%;" onerror="this.src='${fallbackUrl}'" />
+  return `<div class="avatar-frame" style="background:${meta.hex};${size?`width:${size}px;`:''}">
+    <div class="avatar-inner">
+      <img src="${imgUrl}" alt="${name}" style="width:100%; height:100%;" onerror="this.onerror=null; this.src='${fallbackUrl}';" />
     </div>
     <div class="rank-badge" style="background:${meta.hex}; color:#0a0c12;">${meta.badge}</div>
   </div>`;
@@ -495,7 +495,10 @@ const QUOTE_BANK = [
   "They hoped for a chance; I gave them a lesson.",
   "I am the benchmark of success."
 ];
-function quoteFor(name){ return QUOTE_BANK[hashStr(name) % QUOTE_BANK.length]; }
+function quoteFor(name){ 
+  if (NEW_ROOKIES.includes(name)) return "A new challenger approaches.";
+  return QUOTE_BANK[hashStr(name) % QUOTE_BANK.length]; 
+}
 
 document.getElementById('statStrip').innerHTML = `
   <div class="stat"><b>${TOURNAMENTS.length}</b><span>Editions Played</span></div>
@@ -579,7 +582,7 @@ function renderGrid(){
     card.className = 'pcard';
     card.innerHTML = `
       ${p.championships.length ? '<div class="champ-ribbon">Champion</div>' : ''}
-      ${hexAvatar(p.name, p.tier)}
+      ${roundAvatar(p.name, p.tier)}
       <div class="tier-chip" style="background:${meta.hex}22; color:${meta.hex}; border:1px solid ${meta.hex}66;">${meta.badge} ${meta.label}</div>
       <div class="pcard-name">${p.name}</div>
       <div class="pcard-tag">${tagline}</div>
@@ -590,7 +593,6 @@ function renderGrid(){
       </div>
     `;
     card.addEventListener('click', function(){
-      // Adding Slot-Up click animation
       this.classList.add('slotting');
       setTimeout(() => {
         this.classList.remove('slotting');
@@ -616,11 +618,10 @@ function openModal(p){
   modal.offsetHeight; 
   modal.style.animation = null; 
 
-  /* Editions stat removed from modal-stats block below */
   modal.innerHTML = `
     <button class="modal-close" id="closeBtn">&times;</button>
     <div class="modal-top">
-      ${hexAvatar(p.name, p.tier)}
+      ${roundAvatar(p.name, p.tier)}
       <div class="tier-chip" style="background:${meta.hex}22; color:${meta.hex}; border:1px solid ${meta.hex}66;">${meta.badge} ${meta.label}</div>
       <div class="modal-name">${p.name}</div>
       <div class="modal-quote">&ldquo;${quoteFor(p.name)}&rdquo;</div>
@@ -636,7 +637,7 @@ function openModal(p){
       ${p.championships.length ? `<div class="modal-section"><h4>Championship Teams</h4><div class="badge-row">${teamBadges}</div></div>` : ''}
       ${p.yearMVP.length ? `<div class="modal-section"><h4>Year MVP Awards</h4><div class="badge-row">${mvpBadges}</div></div>` : ''}
       <div class="modal-section"><h4>Events Won</h4>${eventRows}</div>
-      <div class="modal-section"><h4>Years Active</h4><div class="badge-row">${p.years.map(y=>`<span class="badge">${y}</span>`).join('')}</div></div>
+      <div class="modal-section"><h4>Years Active</h4><div class="badge-row">${p.years.length ? p.years.map(y=>`<span class="badge">${y}</span>`).join('') : '<span class="badge">Awaiting First Draft</span>'}</div></div>
     </div>
   `;
   overlay.classList.add('show');
@@ -658,9 +659,8 @@ fullRoster.forEach(p=>{
   const el = document.createElement('div');
   el.className = 'roster-card';
   
-  /* Added roster-name below the hexAvatar */
   el.innerHTML = `
-    ${hexAvatar(p.name, p.tier)}
+    ${roundAvatar(p.name, p.tier)}
     <div class="roster-name" title="${p.name}">${p.name}</div>
     <div class="roster-trophies">${trophies}</div>
     <div class="roster-tooltip">
@@ -673,7 +673,8 @@ fullRoster.forEach(p=>{
       </div>
     </div>
   `;
-  el.addEventListener('click', ()=>{ if(p.years.length) openModal(p); });
+  // Allow opening modal for all, including rookies
+  el.addEventListener('click', ()=>{ openModal(p); });
   lineupGrid.appendChild(el);
 });
 
