@@ -433,16 +433,16 @@ const TIER_META = {
   rookie:{ label:'Rookie', hex:'#8a93a6', badge:'🌱' }
 };
 
-/* Pulls avatar from github dynamically using standardized name mapping */
+/* Pulls avatar from github dynamically using EXACT player name */
 function roundAvatar(name, tier, size){
   const meta = TIER_META[tier];
   
-  // Create filename matching "esha_patel.jpg" or "wilfred_dsilva.jpg" format
-  const formattedName = name.toLowerCase().replace(/['.]/g, '').replace(/\s+/g, '_');
-  const imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${formattedName}.jpg`;
+  // Use the exact player name to construct the URL (e.g., "Wilfred D'silva.jpg")
+  const exactName = encodeURIComponent(name);
+  const imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${exactName}.jpg`;
   
-  // Fallback to UI-Avatars if GitHub image is broken or missing
-  const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=transparent&color=f3ead8`;
+  // Fallback text color set to 0a0c12 (dark slate) so it remains clearly visible against gold/diamond backgrounds
+  const fallbackUrl = `https://ui-avatars.com/api/?name=${exactName}&background=transparent&color=0a0c12&bold=true`;
 
   return `<div class="avatar-frame" style="background:${meta.hex};${size?`width:${size}px;`:''}">
     <div class="avatar-inner">
