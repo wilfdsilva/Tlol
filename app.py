@@ -92,12 +92,7 @@ html_code = """
   .hero-section {
     position:relative; padding:90px 4vw 70px; text-align:center; overflow:hidden;
   }
-  .hero-section::before, .hero-section::after{
-    content:""; position:absolute; top:0; bottom:0; width:14px;
-    background:repeating-linear-gradient(180deg, var(--maroon) 0 26px, var(--maroon-bright) 26px 30px);
-    opacity:0.5;
-  }
-  .hero-section::before{left:0;} .hero-section::after{right:0;}
+  
   .eyebrow{
     display:inline-flex; align-items:center; gap:10px;
     font-weight:700; letter-spacing:0.35em; text-transform:uppercase; font-size:11px;
