@@ -29,7 +29,7 @@ st.markdown("""
         }
         /* Disable scrolling on the main Streamlit wrapper so only the iframe scrolls natively */
         body, html, [data-testid="stAppViewContainer"] {
-            overflow: hidden !important;
+            overflow: hidden !important; 
             margin: 0 !important;
             padding: 0 !important;
         }
@@ -528,12 +528,13 @@ const TIER_META = {
 function roundAvatar(name, tier, size){
   const meta = TIER_META[tier];
 
-  // Use the exact player name to construct the URL (e.g., "Wilfred D'silva.jpg")
-  const exactName = encodeURIComponent(name);
-  const imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${exactName}.jpg`;
+  // Safely encode the name, replacing single quotes explicitly so it doesn't break inline HTML or URLs
+  const safeName = encodeURIComponent(name).replace(/'/g, "%27");
+
+  const imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${safeName}.jpg`;
 
   // Fallback text color set to 0a0c12 (dark slate) so it remains clearly visible
-  const fallbackUrl = `https://ui-avatars.com/api/?name=${exactName}&background=transparent&color=0a0c12&bold=true`;
+  const fallbackUrl = `https://ui-avatars.com/api/?name=${safeName}&background=transparent&color=0a0c12&bold=true`;
 
   return `<div class="avatar-frame" style="background:${meta.hex};${size?`width:${size}px;`:''}">
     <div class="avatar-inner">
