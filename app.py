@@ -20,21 +20,23 @@ st.markdown("""
         header[data-testid="stHeader"] {
             display: none !important;
         }
-        /* Force the iframe to take the full viewport height to eliminate double scrollbars */
+        /* Force the iframe to take the full viewport height */
         iframe {
             height: 100vh !important;
-            width: 100% !important;
+            width: 100vw !important;
             border: none !important;
             display: block;
         }
-        /* Disable scrolling on the main Streamlit body */
-        body, html {
+        /* Disable scrolling on the main Streamlit wrapper so only the iframe scrolls natively */
+        body, html, [data-testid="stAppViewContainer"] {
             overflow: hidden !important; 
+            margin: 0 !important;
+            padding: 0 !important;
         }
     </style>
 """, unsafe_allow_html=True)
 
-# The updated HTML, CSS, and JS code
+# The HTML, CSS, and JS code
 html_code = """
 <!DOCTYPE html>
 <html lang="en">
@@ -207,7 +209,7 @@ html_code = """
   .champ-ribbon{position:absolute; top:12px; right:-32px; transform:rotate(40deg); background:var(--maroon); color:var(--gold-bright); font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:4px 38px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:3;}
   .no-results{text-align:center; color:var(--muted); padding:40px 0; font-size:14px; display:none;}
 
-  /* Fixed Click Animation for Cards - Smooth Press instead of glitchy exit */
+  /* Fixed Click Animation for Cards - Smooth Press */
   @keyframes cardPress {
     0% { transform: translateY(-8px) scale(1.03); }
     50% { transform: translateY(0px) scale(0.96); border-color: var(--hextech); }
@@ -607,7 +609,7 @@ function renderGrid(){
       setTimeout(() => {
         this.classList.remove('slotting');
         openModal(p);
-      }, 250); // Synced with the new 0.3s CSS animation
+      }, 250); 
     });
     wofGrid.appendChild(card);
   });
@@ -703,5 +705,5 @@ window.addEventListener('pointermove', e=>{
 </html>
 """
 
-# Render the HTML component without triggering a scrollbar (using CSS injection instead)
-components.html(html_code, scrolling=False)
+# CRITICAL FIX: Add scrolling=True so the iframe generates an internal scrollbar
+components.html(html_code, scrolling=True)
