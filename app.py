@@ -744,7 +744,7 @@ const fullRoster = ALL_PARTICIPANTS.map(buildRecord)
 
 fullRoster.forEach(p=>{
   const meta = TIER_META[p.tier];
-  const trophies = p.years.map(y=>`<span title="${y}">${yearIcon[y]}</span>`).join('');
+  const trophies = p.championships.map(c=>`<span title="Champion ${c.year}">${yearIcon[c.year]}</span>`).join('');
   const el = document.createElement('div');
   el.className = 'roster-card';
   
