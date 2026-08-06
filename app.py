@@ -1,9 +1,9 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Configure the Streamlit page for maximum width
+# Configure the Streamlit page for maximum width and updated tab name
 st.set_page_config(
-    page_title="The TLOL Trophy Hall",
+    page_title="TCOE League of Legends",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -43,7 +43,7 @@ html_code = """
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The TLOL Trophy Hall</title>
+<title>TCOE League of Legends</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -104,18 +104,14 @@ html_code = """
     color:var(--hextech); margin-bottom:22px;
   }
   .eyebrow::before, .eyebrow::after{content:"";width:28px;height:1px;background:var(--gold);}
-  h1{
-    font-family:'Bebas Neue',sans-serif; font-size:clamp(48px, 9vw, 108px);
-    letter-spacing:0.04em; margin:0; line-height:0.95;
-    background:linear-gradient(180deg, var(--gold-bright), var(--gold) 55%, #a9843f);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
+  
   .subhead{
     font-family:'Fraunces', serif; font-style:italic; font-weight:500;
-    font-size:clamp(16px,2.4vw,22px); color:var(--muted); max-width:640px; margin:22px auto 0;
+    font-size:clamp(16px,2.4vw,22px); color:var(--muted); max-width:640px; margin:0 auto;
   }
+  
   .stat-strip{
-    display:flex; flex-wrap:wrap; justify-content:center; margin:52px auto 0; max-width:820px;
+    display:flex; flex-wrap:wrap; justify-content:center; margin:30px auto 44px; max-width:820px;
     border:1px solid var(--line); border-radius:14px; overflow:hidden; background:rgba(255,255,255,0.02);
   }
   .stat{flex:1 1 150px; padding:22px 18px; text-align:center; border-right:1px solid var(--line);}
@@ -316,9 +312,8 @@ html_code = """
 <div id="spotlight"></div>
 
 <header>
-  <div class="eyebrow">Est. 2023 &middot; Office Games Hall of Fame</div>
-  <h1>THE TLOL<br>TROPHY HALL</h1>
-  <div class="stat-strip" id="statStrip"></div>
+  <div class="eyebrow">Est. 2023 &middot; TCOE League of Legends</div>
+  <p class="subhead">Three editions. One rivalry that never sat down. This is where every champion, every MVP, and every ridiculous team name earns a permanent plaque.</p>
 </header>
 
 <section class="block" id="story">
@@ -351,6 +346,9 @@ html_code = """
     <h2>Yearly Trophy Cabinet</h2>
     <p>Every edition, glassed in. The Year MVP is whoever won the most events that year &mdash; tap a case to open the full winning roster.</p>
   </div>
+  
+  <div class="stat-strip" id="statStrip"></div>
+
   <div class="cabinet-row" id="cabinetRow"></div>
 </section>
 
