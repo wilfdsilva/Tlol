@@ -1,5 +1,9 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import pathlib
+import base64
+import json
+import re
 
 # Configure the Streamlit page for maximum width and updated tab name
 st.set_page_config(
@@ -8,31 +12,64 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# -------------------------------------------------------------------
+# PATHLIB METHOD: Safely load local images regardless of Streamlit Cloud working directory
+# -------------------------------------------------------------------
+current_dir = pathlib.Path(__file__).parent.resolve()
+images_dir = current_dir / "images"
+
+# List of all players to map
+ALL_PARTICIPANTS = [
+    "Adnan Shaikh","Amit Singh","Amitabh Singh","Ankit Yadav","Arijit Ghosh",
+    "Arvind Arumuga Nainar","Asif Khan","Ashna Kumar","Avinash Chorage","Avinash Gowda",
+    "Bhagyashree Dhotre","Bhaskar Patil","Bijal Gala","Bishal Pandit","Blessen Thomas",
+    "Darshil Vekaria","Dhananjay Kulkarni","Esakki Shummugavel","Gayatri Zuting",
+    "Gurpreet Kaur","Hitesh Ghadigaonkar","Irshad Darji","Jay Jagad","Jincy Geevarghese",
+    "John Yesudasan","Johnson Thomas","Kartik Nair","Kiran Padwal","Kishansingh Devda",
+    "Komal Panjwani","Kshitij Wadankar","Lalit Chavan","Mahesh Pale","Mayur Pawar",
+    "N Pratap Kumar","Nilesh Mulik","Nilesh Sansare","Nisha Saini","Pooja Nandoskar",
+    "Prachi Dalvi","Pramod Patel","Pritam Paparkar","Pritesh Menon","Rachita Harit",
+    "Rahul Arjun","Rahul Pokharkar","Ravi Chavan","Ravi Khanra","Samiksha Prabhu",
+    "Sanjay Tumma","Sanket Patil","Sanskar Bagwe","Saurabh Mahadik","Shreejith Menon",
+    "Shweta Vichare","Somansh Datta","Suraj Kamerkar","Umesh Gawde","Umesh Tank",
+    "Vibhuti Dabholkar","Vijay Chinkate","Vijay Sangale","Vishal Dubey","Vishal Shinde",
+    "Wilfred Dsilva", "Esha Patel", "Parth Passi", "Kaumod Bagale", "Jagruti Chaudhari", 
+    "Darshan Walwatkar", "Pritam Purohit", "Akhilesh Rai", "Soujanya Siripuram", 
+    "Yogesh Karande", "Chandrajit Yadav"
+]
+
+def normalize_name(name):
+    """Strips all spaces, quotes, underscores, and lowers the text for foolproof matching"""
+    return re.sub(r'[^a-z0-9]', '', name.lower())
+
+image_b64_map = {}
+
+if images_dir.exists() and images_dir.is_dir():
+    # Build a lookup of existing files (e.g. "esha_patel.jpg" -> "eshapatel")
+    local_files = {normalize_name(p.stem): p for p in images_dir.glob("*") if p.suffix.lower() in ['.jpg', '.jpeg', '.png']}
+    
+    for player in ALL_PARTICIPANTS:
+        norm_player = normalize_name(player)
+        if norm_player in local_files:
+            try:
+                with open(local_files[norm_player], "rb") as f:
+                    b64_str = base64.b64encode(f.read()).decode("utf-8")
+                    mime_type = "image/png" if local_files[norm_player].suffix.lower() == '.png' else "image/jpeg"
+                    image_b64_map[player] = f"data:{mime_type};base64,{b64_str}"
+            except Exception as e:
+                pass
+
+# Serialize dictionary to JSON so JavaScript can use it safely
+images_json_str = json.dumps(image_b64_map)
+
+
 # Inject CSS into Streamlit to remove extra scrollbars, padding, and make the iframe fullscreen
 st.markdown("""
     <style>
-        /* Remove Streamlit's default padding and max-width constraints */
-        .block-container {
-            padding: 0rem !important;
-            max-width: 100% !important;
-        }
-        /* Hide the top Streamlit header/chrome */
-        header[data-testid="stHeader"] {
-            display: none !important;
-        }
-        /* Force the iframe to take the full viewport height */
-        iframe {
-            height: 100vh !important;
-            width: 100vw !important;
-            border: none !important;
-            display: block;
-        }
-        /* Disable scrolling on the main Streamlit wrapper so only the iframe scrolls natively */
-        body, html, [data-testid="stAppViewContainer"] {
-            overflow: hidden !important; 
-            margin: 0 !important;
-            padding: 0 !important;
-        }
+        .block-container { padding: 0rem !important; max-width: 100% !important; }
+        header[data-testid="stHeader"] { display: none !important; }
+        iframe { height: 100vh !important; width: 100vw !important; border: none !important; display: block; }
+        body, html, [data-testid="stAppViewContainer"] { overflow: hidden !important; margin: 0 !important; padding: 0 !important; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -121,22 +158,56 @@ html_code = """
   .block-head h2{font-family:'Bebas Neue',sans-serif; font-size:clamp(34px,5vw,54px); letter-spacing:0.03em; margin:0 0 12px;}
   .block-head p{color:var(--muted); max-width:620px; margin:0 auto; font-size:15px; line-height:1.6;}
 
-  /* ---------- Chapter 1: Story ---------- */
-  .story-container {
-    max-width: 800px;
+  /* ---------- Chapter 1: Story Slider ---------- */
+  .story-slider-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
     margin: 0 auto;
-    text-align: center;
-    font-size: 17px;
-    line-height: 1.8;
-    color: var(--cream);
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    background: var(--panel);
   }
-  .story-line {
+  .story-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .story-slide {
+    min-width: 100%;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: flex-end;
+  }
+  /* Dark overlay to make text readable */
+  .story-slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,12,18,0.95) 0%, rgba(10,12,18,0.7) 40%, rgba(10,12,18,0.2) 100%);
+  }
+  .story-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px 60px;
+    width: 100%;
+    text-align: center;
+  }
+  .story-sentence {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 1s ease, transform 1s ease;
-    margin-bottom: 22px;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.6;
+    color: var(--cream);
+    margin: 0 auto 12px;
+    max-width: 800px;
   }
-  .story-line.visible {
+  .story-sentence.visible {
     opacity: 1;
     transform: translateY(0);
   }
@@ -144,8 +215,68 @@ html_code = """
     font-family: 'Fraunces', serif;
     font-style: italic;
     color: var(--gold-bright);
-    font-size: 22px;
-    margin: 36px 0;
+    font-size: clamp(18px, 2.5vw, 24px);
+    margin: 20px auto;
+  }
+
+  /* Slider Navigation */
+  .slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .nav-btn {
+    pointer-events: auto;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--line);
+    color: var(--cream);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+  }
+  .nav-btn:hover:not(:disabled) {
+    background: var(--hextech);
+    color: #0a0c12;
+    border-color: var(--hextech);
+  }
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .slider-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .indicator.active {
+    background: var(--gold-bright);
+  }
+
+  @media (max-width:760px) {
+    .story-slide { aspect-ratio: 4/3; }
+    .story-content { padding: 30px 40px; }
   }
 
   /* ---------- Trophy Cabinet ---------- */
@@ -316,23 +447,71 @@ html_code = """
     <h2>The Legend of TCOE League of Legends</h2>
   </div>
 
-  <div class="story-container" id="storyContainer">
-    <p class="story-line">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
-    <p class="story-line">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
-    <p class="story-line">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
-    <div class="story-line story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</div>
-    <p class="story-line">From that question, a magical quest began.</p>
-    <p class="story-line">The fellowship discovered that the kingdom needed more than work. It needed friendship, teamwork, wellness, leadership, laughter, and a stronger sense of belonging.</p>
-    <p class="story-line">So they set out to create something that would unite everyone.</p>
-    <p class="story-line">But the journey was not easy.</p>
-    <p class="story-line">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
-    <p class="story-line">Yet with every obstacle, more volunteers joined the quest, proving that the greatest strength of the kingdom was its people.</p>
-    <p class="story-line">At last, the fellowship unveiled The TCOE League of Legends.</p>
-    <p class="story-line">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
-    <p class="story-line">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
-    <p class="story-line">And so, every new season begins with the same timeless invitation:</p>
-    <div class="story-line story-quote">"The next chapter of the legend is waiting... Will you become one of them?"</div>
+  <div class="story-slider-wrapper">
+    <div class="story-track" id="storyTrack">
+      
+      <!-- Slide 1 -->
+      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.webp');">
+        <div class="story-content">
+          <p class="story-sentence">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
+          <p class="story-sentence">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
+        </div>
+      </div>
+      
+      <!-- Slide 2 -->
+      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.webp');">
+        <div class="story-content">
+          <p class="story-sentence">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
+          <p class="story-sentence story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</p>
+          <p class="story-sentence">From that question, a magical quest began.</p>
+          <p class="story-sentence">The fellowship discovered that the kingdom needed more than work. It needed friendship, teamwork, wellness, leadership, laughter, and a stronger sense of belonging.</p>
+          <p class="story-sentence">So they set out to create something that would unite everyone.</p>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.webp');">
+        <div class="story-content">
+          <p class="story-sentence">But the journey was not easy.</p>
+          <p class="story-sentence">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
+          <p class="story-sentence">Yet with every obstacle, more volunteers joined the quest, proving that the greatest strength of the kingdom was its people.</p>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.webp');">
+        <div class="story-content">
+          <p class="story-sentence">At last, the fellowship unveiled The TCOE League of Legends.</p>
+          <p class="story-sentence">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.webp');">
+        <div class="story-content">
+          <p class="story-sentence">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
+          <p class="story-sentence">And so, every new season begins with the same timeless invitation:</p>
+          <p class="story-sentence story-quote">"The next chapter of the legend is waiting... Will you become one of them?"</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Slider Navigation Controls -->
+    <div class="slider-nav">
+      <button class="nav-btn" id="prevBtn" disabled>&larr;</button>
+      <button class="nav-btn" id="nextBtn">&rarr;</button>
+    </div>
   </div>
+
+  <div class="slider-indicators" id="sliderIndicators">
+    <div class="indicator active" data-slide="0"></div>
+    <div class="indicator" data-slide="1"></div>
+    <div class="indicator" data-slide="2"></div>
+    <div class="indicator" data-slide="3"></div>
+    <div class="indicator" data-slide="4"></div>
+  </div>
+
 </section>
 
 <section class="block" id="cabinet">
@@ -381,39 +560,66 @@ html_code = """
 </div>
 
 <script>
-/* ============ STORY ANIMATION ============ */
-const storyLines = document.querySelectorAll('.story-line');
-let storyTimeouts = [];
-let storyAnimationFinished = false;
-let scrollTriggered = false;
+/* Inject Local Base64 Images */
+const LOCAL_IMAGES = /* __IMAGES_JSON__ */;
 
-function startStoryAnimation() {
-  storyLines.forEach((line, index) => {
-    const t = setTimeout(() => {
-      line.classList.add('visible');
-      if(index === storyLines.length - 1) storyAnimationFinished = true;
-    }, index * 1200); // Wait 1.2s between each line
-    storyTimeouts.push(t);
+/* ============ STORY SLIDER ANIMATION ============ */
+const track = document.getElementById('storyTrack');
+const slides = document.querySelectorAll('.story-slide');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const indicators = document.querySelectorAll('.indicator');
+let currentSlide = 0;
+let storyTimeouts = [];
+
+function updateSlider() {
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  
+  prevBtn.disabled = currentSlide === 0;
+  nextBtn.disabled = currentSlide === slides.length - 1;
+  
+  indicators.forEach((ind, i) => {
+    ind.classList.toggle('active', i === currentSlide);
+  });
+
+  // Clear existing animations
+  storyTimeouts.forEach(clearTimeout);
+  storyTimeouts = [];
+
+  // Animate sentences for the active slide
+  slides.forEach((slide, sIdx) => {
+    const sentences = slide.querySelectorAll('.story-sentence');
+    if (sIdx === currentSlide) {
+      sentences.forEach((sentence, idx) => {
+        const t = setTimeout(() => {
+          sentence.classList.add('visible');
+        }, idx * 1200); // 1.2s delay between sentences
+        storyTimeouts.push(t);
+      });
+    } else {
+      // Hide sentences on inactive slides so they re-animate when returned to
+      sentences.forEach(s => s.classList.remove('visible'));
+    }
   });
 }
 
-function skipStoryAnimation() {
-  if (storyAnimationFinished || scrollTriggered) return;
-  scrollTriggered = true;
-  storyTimeouts.forEach(clearTimeout);
-  storyLines.forEach(line => line.classList.add('visible'));
-  storyAnimationFinished = true;
-}
-
-// Start animation shortly after load
-setTimeout(startStoryAnimation, 500);
-
-// If the user scrolls AT ALL, instantly reveal the rest of the text
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 30) {
-        skipStoryAnimation();
-    }
+prevBtn.addEventListener('click', () => {
+  if (currentSlide > 0) { currentSlide--; updateSlider(); }
 });
+
+nextBtn.addEventListener('click', () => {
+  if (currentSlide < slides.length - 1) { currentSlide++; updateSlider(); }
+});
+
+indicators.forEach((ind) => {
+  ind.addEventListener('click', (e) => {
+    currentSlide = parseInt(e.target.dataset.slide);
+    updateSlider();
+  });
+});
+
+// Initialize first slide on load
+setTimeout(updateSlider, 300);
 
 /* ============ RAW TOURNAMENT DATA ============ */
 const TOURNAMENTS = [
@@ -524,17 +730,21 @@ const TIER_META = {
   rookie:{ label:'Rookie', hex:'#8a93a6', badge:'🌱' }
 };
 
-/* Pulls avatar from github dynamically using EXACT player name */
+/* Pulls avatar safely utilizing the Pathlib Base64 Injection OR a fallback URL */
 function roundAvatar(name, tier, size){
   const meta = TIER_META[tier];
 
-  // Safely encode the name, replacing single quotes explicitly so it doesn't break inline HTML or URLs
-  const safeName = encodeURIComponent(name).replace(/'/g, "%27");
-
-  const imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${safeName}.jpg`;
-
-  // Fallback text color set to 0a0c12 (dark slate) so it remains clearly visible
-  const fallbackUrl = `https://ui-avatars.com/api/?name=${safeName}&background=transparent&color=0a0c12&bold=true`;
+  // Safely URL encode name for standard external fallback
+  const exactName = encodeURIComponent(name).replace(/'/g, "%27");
+  const fallbackUrl = `https://ui-avatars.com/api/?name=${exactName}&background=transparent&color=0a0c12&bold=true`;
+  
+  // Use locally served base64 image if it was found by Python pathlib
+  let imgUrl = LOCAL_IMAGES[name];
+  
+  // If the pathlib method didn't find the local file, try the github raw url as a secondary backup
+  if (!imgUrl) {
+      imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${exactName}.jpg`;
+  }
 
   return `<div class="avatar-frame" style="background:${meta.hex};${size?`width:${size}px;`:''}">
     <div class="avatar-inner">
@@ -782,5 +992,8 @@ window.addEventListener('pointermove', e=>{
 </body>
 </html>
 """
+
+# Dynamically inject the local image Base64 mappings generated by Pathlib
+html_code = html_code.replace("/* __IMAGES_JSON__ */", images_json_str)
 
 components.html(html_code, scrolling=True)
