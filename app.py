@@ -125,21 +125,82 @@ html_code = """
     transition:background 0.05s linear;
   }
 
-  /* Merged Header & Chapter One Section */
-  .hero-section {
-    position:relative; padding:90px 4vw 70px; text-align:center; overflow:hidden;
+  /* Global Header */
+  .main-header {
+    position:relative; padding:70px 4vw 0; text-align:center;
   }
-
   .eyebrow{
     display:inline-flex; align-items:center; gap:10px;
     font-weight:700; letter-spacing:0.35em; text-transform:uppercase; font-size:11px;
     color:var(--hextech); margin-bottom:22px;
   }
   .eyebrow::before, .eyebrow::after{content:"";width:28px;height:1px;background:var(--gold);}
-
   .subhead{
     font-family:'Fraunces', serif; font-style:italic; font-weight:500;
-    font-size:clamp(16px,2.4vw,22px); color:var(--muted); max-width:640px; margin:0 auto 70px;
+    font-size:clamp(16px,2.4vw,22px); color:var(--muted); max-width:640px; margin:0 auto;
+  }
+
+  /* Custom Tab Navigation */
+  .tab-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+    border-bottom: 1px solid var(--line);
+    padding: 0 4vw;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    padding: 12px 20px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .tab-btn:hover { color: var(--cream); }
+  .tab-btn.active { color: var(--gold-bright); }
+  .tab-btn.active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold-bright);
+    box-shadow: 0 -2px 10px rgba(243, 209, 142, 0.5);
+  }
+
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .placeholder-tab {
+    text-align: center;
+    padding: 100px 20px;
+  }
+  .placeholder-tab h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold-bright);
+    margin: 0 0 10px;
+    letter-spacing: 0.05em;
+  }
+  .placeholder-tab p {
+    color: var(--muted);
+    font-size: 16px;
   }
 
   .stat-strip{
@@ -152,7 +213,7 @@ html_code = """
   .stat span{font-size:11px; text-transform:uppercase; letter-spacing:0.14em; color:var(--muted);}
 
   /* Widened block boundaries */
-  section.block{padding:80px 4vw; max-width:1800px; margin:0 auto;}
+  section.block{padding:60px 4vw 80px; max-width:1800px; margin:0 auto;}
   .block-head{margin-bottom:44px; text-align:center;}
   .block-head .kicker{font-size:11px; letter-spacing:0.3em; text-transform:uppercase; color:var(--maroon-bright); font-weight:700; margin-bottom:10px;}
   .block-head h2{font-family:'Bebas Neue',sans-serif; font-size:clamp(34px,5vw,54px); letter-spacing:0.03em; margin:0 0 12px;}
@@ -160,124 +221,35 @@ html_code = """
 
   /* ---------- Chapter 1: Story Slider ---------- */
   .story-slider-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    overflow: hidden;
-    border-radius: 16px;
-    border: 1px solid var(--line);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    background: var(--panel);
+    position: relative; width: 100%; max-width: 1000px; margin: 0 auto; overflow: hidden;
+    border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 20px 50px rgba(0,0,0,0.5); background: var(--panel);
   }
-  .story-track {
-    display: flex;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-  }
+  .story-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
   .story-slide {
-    min-width: 100%;
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    aspect-ratio: 16/9;
-    display: flex;
-    align-items: flex-end;
+    min-width: 100%; position: relative; background-size: cover; background-position: center;
+    aspect-ratio: 16/9; display: flex; align-items: flex-end;
   }
-  /* Dark overlay to make text readable */
   .story-slide::before {
-    content: "";
-    position: absolute;
-    inset: 0;
+    content: ""; position: absolute; inset: 0;
     background: linear-gradient(to top, rgba(10,12,18,0.95) 0%, rgba(10,12,18,0.7) 40%, rgba(10,12,18,0.2) 100%);
   }
-  .story-content {
-    position: relative;
-    z-index: 2;
-    padding: 40px 60px;
-    width: 100%;
-    text-align: center;
-  }
+  .story-content { position: relative; z-index: 2; padding: 40px 60px; width: 100%; text-align: center; }
   .story-sentence {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-    font-size: clamp(15px, 2vw, 18px);
-    line-height: 1.6;
-    color: var(--cream);
-    margin: 0 auto 12px;
-    max-width: 800px;
+    opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease;
+    font-size: clamp(15px, 2vw, 18px); line-height: 1.6; color: var(--cream); margin: 0 auto 12px; max-width: 800px;
   }
-  .story-sentence.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .story-quote {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    color: var(--gold-bright);
-    font-size: clamp(18px, 2.5vw, 24px);
-    margin: 20px auto;
-  }
+  .story-sentence.visible { opacity: 1; transform: translateY(0); }
+  .story-quote { font-family: 'Fraunces', serif; font-style: italic; color: var(--gold-bright); font-size: clamp(18px, 2.5vw, 24px); margin: 20px auto; }
 
   /* Slider Navigation */
-  .slider-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
-    z-index: 5;
-    pointer-events: none;
-  }
-  .nav-btn {
-    pointer-events: auto;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid var(--line);
-    color: var(--cream);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    backdrop-filter: blur(4px);
-    transition: all 0.2s;
-  }
-  .nav-btn:hover:not(:disabled) {
-    background: var(--hextech);
-    color: #0a0c12;
-    border-color: var(--hextech);
-  }
-  .nav-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-  .slider-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-  }
-  .indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  .indicator.active {
-    background: var(--gold-bright);
-  }
-
-  @media (max-width:760px) {
-    .story-slide { aspect-ratio: 4/3; }
-    .story-content { padding: 30px 40px; }
-  }
+  .slider-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 100%; display: flex; justify-content: space-between; padding: 0 20px; z-index: 5; pointer-events: none; }
+  .nav-btn { pointer-events: auto; background: rgba(255,255,255,0.1); border: 1px solid var(--line); color: var(--cream); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); transition: all 0.2s; }
+  .nav-btn:hover:not(:disabled) { background: var(--hextech); color: #0a0c12; border-color: var(--hextech); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .slider-indicators { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+  .indicator { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: background 0.3s; }
+  .indicator.active { background: var(--gold-bright); }
+  @media (max-width:760px) { .story-slide { aspect-ratio: 4/3; } .story-content { padding: 30px 40px; } }
 
   /* ---------- Trophy Cabinet ---------- */
   .cabinet-row{display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); gap:28px;}
@@ -358,30 +330,23 @@ html_code = """
   .champ-ribbon{position:absolute; top:12px; right:-32px; transform:rotate(40deg); background:var(--maroon); color:var(--gold-bright); font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:4px 38px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:3;}
   .no-results{text-align:center; color:var(--muted); padding:40px 0; font-size:14px; display:none;}
 
-  /* Fixed Click Animation for Cards - Smooth Press */
+  /* Fixed Click Animation for Cards */
   @keyframes cardPress {
     0% { transform: translateY(-8px) scale(1.03); }
     50% { transform: translateY(0px) scale(0.96); border-color: var(--hextech); }
     100% { transform: translateY(-8px) scale(1.03); border-color: var(--hextech); }
   }
-  .pcard.slotting {
-    animation: cardPress 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    pointer-events: none;
-  }
+  .pcard.slotting { animation: cardPress 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; pointer-events: none; }
 
-  /* ---------- Chapter 4: Full roster grid (Fluid Auto-fill width) ---------- */
+  /* ---------- Chapter 4: Full roster grid ---------- */
   .lineup-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
-    gap:26px 14px;
-    justify-content: center;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:26px 14px; justify-content: center;
   }
   .roster-card{position:relative; text-align:center; cursor:pointer;}
   .roster-card .avatar-frame{transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin: 0 auto; width: 90px;}
   .roster-card:hover .avatar-frame{transform:translateY(-6px) scale(1.08);}
   .roster-name{
-    font-size: 11.5px; font-weight: 600; color: var(--cream);
-    margin-top: 10px; white-space: nowrap; overflow: hidden;
+    font-size: 11.5px; font-weight: 600; color: var(--cream); margin-top: 10px; white-space: nowrap; overflow: hidden;
     text-overflow: ellipsis; padding: 0 4px;
   }
   .roster-trophies{display:flex; justify-content:center; gap:4px; margin-top:4px; min-height:16px; font-size:13px;}
@@ -437,118 +402,147 @@ html_code = """
 
 <div id="spotlight"></div>
 
-<!-- Merged Hero & Story Section -->
-<section class="hero-section" id="story">
+<!-- Global Header with Tabs -->
+<header class="main-header">
   <div class="eyebrow">Est. 2023 &middot; TCOE League of Legends</div>
   <p class="subhead">Three editions. One rivalry that never sat down. This is where every champion, every MVP, and every ridiculous team name earns a permanent plaque.</p>
 
-  <div class="block-head">
-    <div class="kicker">Chapter One</div>
-    <h2>The Legend of TCOE League of Legends</h2>
+  <div class="tab-nav">
+    <button class="tab-btn active" data-target="tab-history">History</button>
+    <button class="tab-btn" data-target="tab-hof">Hall of Fame</button>
+    <button class="tab-btn" data-target="tab-auction">Auction</button>
+    <button class="tab-btn" data-target="tab-fixtures">Fixtures</button>
+    <button class="tab-btn" data-target="tab-dashboard">Dashboard</button>
   </div>
+</header>
 
-  <div class="story-slider-wrapper">
-    <div class="story-track" id="storyTrack">
-      
-      <!-- Slide 1 -->
-      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.webp');">
-        <div class="story-content">
-          <p class="story-sentence">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
-          <p class="story-sentence">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
-        </div>
-      </div>
-      
-      <!-- Slide 2 -->
-      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.webp');">
-        <div class="story-content">
-          <p class="story-sentence">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
-          <p class="story-sentence story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</p>
-          <p class="story-sentence">From that question, a magical quest began.</p>
-          <p class="story-sentence">The fellowship discovered that the kingdom needed more than work. It needed friendship, teamwork, wellness, leadership, laughter, and a stronger sense of belonging.</p>
-          <p class="story-sentence">So they set out to create something that would unite everyone.</p>
-        </div>
-      </div>
-
-      <!-- Slide 3 -->
-      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.webp');">
-        <div class="story-content">
-          <p class="story-sentence">But the journey was not easy.</p>
-          <p class="story-sentence">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
-          <p class="story-sentence">Yet with every obstacle, more volunteers joined the quest, proving that the greatest strength of the kingdom was its people.</p>
-        </div>
-      </div>
-
-      <!-- Slide 4 -->
-      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.webp');">
-        <div class="story-content">
-          <p class="story-sentence">At last, the fellowship unveiled The TCOE League of Legends.</p>
-          <p class="story-sentence">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
-        </div>
-      </div>
-
-      <!-- Slide 5 -->
-      <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.webp');">
-        <div class="story-content">
-          <p class="story-sentence">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
-          <p class="story-sentence">And so, every new season begins with the same timeless invitation:</p>
-          <p class="story-sentence story-quote">"The next chapter of the legend is waiting... Will you become one of them?"</p>
-        </div>
-      </div>
-
+<!-- TAB: HISTORY -->
+<div id="tab-history" class="tab-content active">
+  <section class="block" id="story">
+    <div class="block-head">
+      <div class="kicker">Chapter One</div>
+      <h2>The Legend of TCOE League of Legends</h2>
     </div>
 
-    <!-- Slider Navigation Controls -->
-    <div class="slider-nav">
-      <button class="nav-btn" id="prevBtn" disabled>&larr;</button>
-      <button class="nav-btn" id="nextBtn">&rarr;</button>
+    <div class="story-slider-wrapper">
+      <div class="story-track" id="storyTrack">
+        <!-- Slide 1 -->
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.jpg');">
+          <div class="story-content">
+            <p class="story-sentence">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
+            <p class="story-sentence">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.jpg');">
+          <div class="story-content">
+            <p class="story-sentence">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
+            <p class="story-sentence story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</p>
+            <p class="story-sentence">From that question, a magical quest began.</p>
+            <p class="story-sentence">The fellowship discovered that the kingdom needed more than work. It needed friendship, teamwork, wellness, leadership, laughter, and a stronger sense of belonging.</p>
+            <p class="story-sentence">So they set out to create something that would unite everyone.</p>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.jpg');">
+          <div class="story-content">
+            <p class="story-sentence">But the journey was not easy.</p>
+            <p class="story-sentence">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
+            <p class="story-sentence">Yet with every obstacle, more volunteers joined the quest, proving that the greatest strength of the kingdom was its people.</p>
+          </div>
+        </div>
+        <!-- Slide 4 -->
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.jpg');">
+          <div class="story-content">
+            <p class="story-sentence">At last, the fellowship unveiled The TCOE League of Legends.</p>
+            <p class="story-sentence">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
+          </div>
+        </div>
+        <!-- Slide 5 -->
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.jpg');">
+          <div class="story-content">
+            <p class="story-sentence">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
+            <p class="story-sentence">And so, every new season begins with the same timeless invitation:</p>
+            <p class="story-sentence story-quote">"The next chapter of the legend is waiting... Will you become one of them?"</p>
+          </div>
+        </div>
+      </div>
+      <!-- Slider Navigation Controls -->
+      <div class="slider-nav">
+        <button class="nav-btn" id="prevBtn" disabled>&larr;</button>
+        <button class="nav-btn" id="nextBtn">&rarr;</button>
+      </div>
     </div>
+    <div class="slider-indicators" id="sliderIndicators">
+      <div class="indicator active" data-slide="0"></div>
+      <div class="indicator" data-slide="1"></div>
+      <div class="indicator" data-slide="2"></div>
+      <div class="indicator" data-slide="3"></div>
+      <div class="indicator" data-slide="4"></div>
+    </div>
+  </section>
+
+  <section class="block" id="cabinet">
+    <div class="block-head">
+      <div class="kicker">Chapter Two</div>
+      <h2>Yearly Trophy Cabinet</h2>
+      <p>Every edition, glassed in. The Year MVP is whoever won the most events that year &mdash; tap a case to open the full winning roster.</p>
+    </div>
+    <div class="stat-strip" id="statStrip"></div>
+    <div class="cabinet-row" id="cabinetRow"></div>
+  </section>
+</div>
+
+<!-- TAB: HALL OF FAME -->
+<div id="tab-hof" class="tab-content">
+  <section class="block" id="wof">
+    <div class="block-head">
+      <div class="kicker">Chapter Three</div>
+      <h2>Walk of Fame</h2>
+      <p>Every player who ever left the TLOL floor with a trophy, styled as a Rift-ready summoner icon &mdash; rank border generated from their stats. Click a card for the full story.</p>
+    </div>
+    <div class="wof-controls">
+      <input class="wof-search" id="searchInput" type="text" placeholder="Search a legend by name&hellip;">
+      <div class="chip-group" id="yearChips"></div>
+    </div>
+    <div class="wof-grid" id="wofGrid"></div>
+    <div class="no-results" id="noResults">No legend matches that search. Try another name or year.</div>
+  </section>
+
+  <section class="block" id="lineup">
+    <div class="block-head">
+      <div class="kicker">Chapter Four</div>
+      <h2>The Full Roster Line-Up</h2>
+      <p>Every single person who's ever played TLOL, ranked by stats &mdash; strongest record first. Hover anyone to see who they are and what they won.</p>
+    </div>
+    <div class="lineup-grid" id="lineupGrid"></div>
+    <div class="lineup-legend" id="lineupLegend"></div>
+  </section>
+</div>
+
+<!-- TAB: AUCTION -->
+<div id="tab-auction" class="tab-content">
+  <div class="placeholder-tab">
+    <h2>Auction</h2>
+    <p>The auction details for the next season are currently being finalized. Check back soon.</p>
   </div>
+</div>
 
-  <div class="slider-indicators" id="sliderIndicators">
-    <div class="indicator active" data-slide="0"></div>
-    <div class="indicator" data-slide="1"></div>
-    <div class="indicator" data-slide="2"></div>
-    <div class="indicator" data-slide="3"></div>
-    <div class="indicator" data-slide="4"></div>
+<!-- TAB: FIXTURES -->
+<div id="tab-fixtures" class="tab-content">
+  <div class="placeholder-tab">
+    <h2>Fixtures</h2>
+    <p>The match schedule will be updated here once the teams are drawn.</p>
   </div>
+</div>
 
-</section>
-
-<section class="block" id="cabinet">
-  <div class="block-head">
-    <div class="kicker">Chapter Two</div>
-    <h2>Yearly Trophy Cabinet</h2>
-    <p>Every edition, glassed in. The Year MVP is whoever won the most events that year &mdash; tap a case to open the full winning roster.</p>
+<!-- TAB: DASHBOARD -->
+<div id="tab-dashboard" class="tab-content">
+  <div class="placeholder-tab">
+    <h2>Dashboard</h2>
+    <p>Player stats, historical data analysis, and advanced metrics coming soon.</p>
   </div>
-
-  <div class="stat-strip" id="statStrip"></div>
-
-  <div class="cabinet-row" id="cabinetRow"></div>
-</section>
-
-<section class="block" id="wof">
-  <div class="block-head">
-    <div class="kicker">Chapter Three</div>
-    <h2>Walk of Fame</h2>
-    <p>Every player who ever left the TLOL floor with a trophy, styled as a Rift-ready summoner icon &mdash; rank border generated from their stats. Click a card for the full story.</p>
-  </div>
-  <div class="wof-controls">
-    <input class="wof-search" id="searchInput" type="text" placeholder="Search a legend by name&hellip;">
-    <div class="chip-group" id="yearChips"></div>
-  </div>
-  <div class="wof-grid" id="wofGrid"></div>
-  <div class="no-results" id="noResults">No legend matches that search. Try another name or year.</div>
-</section>
-
-<section class="block" id="lineup">
-  <div class="block-head">
-    <div class="kicker">Chapter Four</div>
-    <h2>The Full Roster Line-Up</h2>
-    <p>Every single person who's ever played TLOL, ranked by stats &mdash; strongest record first. Hover anyone to see who they are and what they won.</p>
-  </div>
-  <div class="lineup-grid" id="lineupGrid"></div>
-  <div class="lineup-legend" id="lineupLegend"></div>
-</section>
+</div>
 
 <footer>
   Built from three years of carrom smack talk, foosball rematches, and one unforgettable cricket final.<br>
@@ -562,6 +556,25 @@ html_code = """
 <script>
 /* Inject Local Base64 Images */
 const LOCAL_IMAGES = /* __IMAGES_JSON__ */;
+
+/* ============ TAB NAVIGATION ============ */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Remove active state from all
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.classList.remove('active'));
+    
+    // Add active state to clicked tab
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).classList.add('active');
+    
+    // Auto-scroll to top when changing tabs
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
 
 /* ============ STORY SLIDER ANIMATION ============ */
 const track = document.getElementById('storyTrack');
