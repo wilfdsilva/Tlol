@@ -427,14 +427,14 @@ html_code = """
     <div class="story-slider-wrapper">
       <div class="story-track" id="storyTrack">
         <!-- Slide 1 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.jpg');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.webp');">
           <div class="story-content">
             <p class="story-sentence">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
             <p class="story-sentence">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
           </div>
         </div>
         <!-- Slide 2 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.jpg');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.webp');">
           <div class="story-content">
             <p class="story-sentence">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
             <p class="story-sentence story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</p>
@@ -444,7 +444,7 @@ html_code = """
           </div>
         </div>
         <!-- Slide 3 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.jpg');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.webp');">
           <div class="story-content">
             <p class="story-sentence">But the journey was not easy.</p>
             <p class="story-sentence">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
@@ -452,14 +452,14 @@ html_code = """
           </div>
         </div>
         <!-- Slide 4 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.jpg');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.webp');">
           <div class="story-content">
             <p class="story-sentence">At last, the fellowship unveiled The TCOE League of Legends.</p>
             <p class="story-sentence">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
           </div>
         </div>
         <!-- Slide 5 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.jpg');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.webp');">
           <div class="story-content">
             <p class="story-sentence">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
             <p class="story-sentence">And so, every new season begins with the same timeless invitation:</p>
