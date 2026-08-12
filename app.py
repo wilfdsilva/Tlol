@@ -481,7 +481,10 @@ html_code = """
       <div class="indicator" data-slide="4"></div>
     </div>
   </section>
+</div>
 
+<!-- TAB: HALL OF FAME -->
+<div id="tab-hof" class="tab-content">
   <section class="block" id="cabinet">
     <div class="block-head">
       <div class="kicker">Chapter Two</div>
@@ -491,10 +494,7 @@ html_code = """
     <div class="stat-strip" id="statStrip"></div>
     <div class="cabinet-row" id="cabinetRow"></div>
   </section>
-</div>
 
-<!-- TAB: HALL OF FAME -->
-<div id="tab-hof" class="tab-content">
   <section class="block" id="wof">
     <div class="block-head">
       <div class="kicker">Chapter Three</div>
