@@ -1,2 +1,8 @@
 streamlit
 pandas
+fastapi
+uvicorn
+itsdangerous
+python-multipart
+pydantic
+starlette
