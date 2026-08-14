@@ -644,8 +644,8 @@ html_code = """
       </div>
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Royal%20Challengers%20Bangalore.webp" alt="Royal Challengers Bangalore">
-        <h3>Royal Challengers Bangalore</h3>
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Royal%20Challengers%20Bhagyashree.webp" alt="Royal Challengers Bhagyashree">
+        <h3>Royal Challengers Bhagyashree</h3>
         <p class="team-role">Captain <b>Bhagyashree Dhotre</b></p>
         <p class="team-role">Vice Captains <b>Sanskar Bagwe & Pramod Patel</b></p>
         <p class="team-role">Squad <b>Avinash Chorage, Rachita Harit</b></p>
