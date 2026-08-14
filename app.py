@@ -219,6 +219,33 @@ html_code = """
   .block-head h2{font-family:'Bebas Neue',sans-serif; font-size:clamp(34px,5vw,54px); letter-spacing:0.03em; margin:0 0 12px;}
   .block-head p{color:var(--muted); max-width:620px; margin:0 auto; font-size:15px; line-height:1.6;}
 
+  /* ---------- New Tabs: Schedule, Format, Teams ---------- */
+  .table-responsive { overflow-x: auto; max-width: 1000px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); }
+  .styled-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 15px; }
+  .styled-table th, .styled-table td { padding: 16px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .styled-table th:last-child, .styled-table td:last-child { border-right: none; }
+  .styled-table th { color: var(--gold-bright); font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.1em; font-weight: normal; background: rgba(0,0,0,0.2); }
+  .styled-table tr:last-child td { border-bottom: none; }
+  .styled-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  .styled-table tr:hover { background: rgba(10,200,185,0.05); }
+
+  .format-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto; text-align: left; }
+  .format-card { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--line); border-radius: 16px; padding: 36px 30px; }
+  .format-card h3 { font-family: 'Bebas Neue', sans-serif; color: var(--gold-bright); font-size: 32px; margin: 0 0 20px; letter-spacing: 0.05em; text-align: center; }
+  .format-card ul { padding-left: 20px; color: var(--cream); line-height: 1.8; font-size: 15px; margin: 0; }
+  .points-list { list-style: none; padding: 0 !important; }
+  .points-list li { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .points-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .points-list li:first-child { padding-top: 0; }
+  .points-list span.pts { color: var(--gold-bright); font-weight: 700; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; }
+
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+  .team-card { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--line); border-radius: 16px; padding: 36px 20px; text-align: center; transition: transform 0.3s ease, border-color 0.3s ease; }
+  .team-card:hover { transform: translateY(-8px); border-color: var(--hextech); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+  .team-card h3 { font-family: 'Bebas Neue', sans-serif; color: var(--gold-bright); font-size: 28px; margin: 0 0 12px; letter-spacing: 0.05em; line-height: 1.2; }
+  .team-card p { color: var(--muted); margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; }
+  .team-card p b { color: var(--cream); font-size: 15px; display: block; margin-top: 6px; }
+
   /* ---------- Chapter 1: Story Slider ---------- */
   .story-slider-wrapper {
     position: relative; width: 100%; max-width: 1000px; margin: 0 auto; overflow: hidden;
@@ -326,29 +353,18 @@ html_code = """
     border-radius: 8px; padding: 6px;
   }
   .pcard-stats b, .modal-stats b, .tt-stats b {display:block; color:var(--gold-bright); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.02em; line-height:1;}
-
   .champ-ribbon{position:absolute; top:12px; right:-32px; transform:rotate(40deg); background:var(--maroon); color:var(--gold-bright); font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:4px 38px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:3;}
   .no-results{text-align:center; color:var(--muted); padding:40px 0; font-size:14px; display:none;}
 
   /* Fixed Click Animation for Cards */
-  @keyframes cardPress {
-    0% { transform: translateY(-8px) scale(1.03); }
-    50% { transform: translateY(0px) scale(0.96); border-color: var(--hextech); }
-    100% { transform: translateY(-8px) scale(1.03); border-color: var(--hextech); }
-  }
+  @keyframes cardPress { 0% { transform: translateY(-8px) scale(1.03); } 50% { transform: translateY(0px) scale(0.96); border-color: var(--hextech); } 100% { transform: translateY(-8px) scale(1.03); border-color: var(--hextech); } }
   .pcard.slotting { animation: cardPress 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; pointer-events: none; }
 
-  /* ---------- Chapter 4: Full roster grid ---------- */
-  .lineup-grid{
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:26px 14px; justify-content: center;
-  }
+  .lineup-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:26px 14px; justify-content: center; }
   .roster-card{position:relative; text-align:center; cursor:pointer;}
   .roster-card .avatar-frame{transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin: 0 auto; width: 90px;}
   .roster-card:hover .avatar-frame{transform:translateY(-6px) scale(1.08);}
-  .roster-name{
-    font-size: 11.5px; font-weight: 600; color: var(--cream); margin-top: 10px; white-space: nowrap; overflow: hidden;
-    text-overflow: ellipsis; padding: 0 4px;
-  }
+  .roster-name{ font-size: 11.5px; font-weight: 600; color: var(--cream); margin-top: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px; }
   .roster-trophies{display:flex; justify-content:center; gap:4px; margin-top:4px; min-height:16px; font-size:13px;}
   .roster-tooltip{
     position:absolute; bottom:100%; left:50%; transform:translate(-50%, 12px) scale(0.9);
@@ -366,15 +382,11 @@ html_code = """
 
   @media (max-width:760px){ .lineup-grid{grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:20px 8px;} }
 
-  /* ---------- Modal ---------- */
   .overlay{position:fixed; inset:0; background:rgba(6,7,11,0.78); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; z-index:50; padding:24px;}
   .overlay.show{display:flex;}
   .modal{width:100%; max-width:480px; max-height:88vh; overflow-y:auto; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:20px; position:relative; box-shadow:0 30px 80px rgba(0,0,0,0.6); animation:popBounce .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;}
 
-  @keyframes popBounce{
-    0% { transform: translateY(80px) scale(0.95); opacity: 0; }
-    100% { transform: translateY(0) scale(1); opacity: 1; }
-  }
+  @keyframes popBounce{ 0% { transform: translateY(80px) scale(0.95); opacity: 0; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
 
   .modal-close{position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--line); color:var(--cream); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: transform 0.2s, background 0.2s;}
   .modal-close:hover{background:var(--maroon); border-color:var(--maroon); transform:rotate(90deg);}
@@ -410,7 +422,9 @@ html_code = """
   <div class="tab-nav">
     <button class="tab-btn active" data-target="tab-history">History</button>
     <button class="tab-btn" data-target="tab-hof">Hall of Fame</button>
-    <button class="tab-btn" data-target="tab-auction">Auction</button>
+    <button class="tab-btn" data-target="tab-schedule">Schedule</button>
+    <button class="tab-btn" data-target="tab-format">Format</button>
+    <button class="tab-btn" data-target="tab-teams">Teams</button>
     <button class="tab-btn" data-target="tab-fixtures">Fixtures</button>
     <button class="tab-btn" data-target="tab-dashboard">Dashboard</button>
   </div>
@@ -427,14 +441,14 @@ html_code = """
     <div class="story-slider-wrapper">
       <div class="story-track" id="storyTrack">
         <!-- Slide 1 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.webp');">
+        <div class="story-slide" style="background-image: url('/images/Story/1.webp');">
           <div class="story-content">
             <p class="story-sentence">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
             <p class="story-sentence">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
           </div>
         </div>
         <!-- Slide 2 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.webp');">
+        <div class="story-slide" style="background-image: url('/images/Story/2.webp');">
           <div class="story-content">
             <p class="story-sentence">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
             <p class="story-sentence story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</p>
@@ -444,7 +458,7 @@ html_code = """
           </div>
         </div>
         <!-- Slide 3 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.webp');">
+        <div class="story-slide" style="background-image: url('/images/Story/3.webp');">
           <div class="story-content">
             <p class="story-sentence">But the journey was not easy.</p>
             <p class="story-sentence">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
@@ -452,14 +466,14 @@ html_code = """
           </div>
         </div>
         <!-- Slide 4 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.webp');">
+        <div class="story-slide" style="background-image: url('/images/Story/4.webp');">
           <div class="story-content">
             <p class="story-sentence">At last, the fellowship unveiled The TCOE League of Legends.</p>
             <p class="story-sentence">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
           </div>
         </div>
         <!-- Slide 5 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.webp');">
+        <div class="story-slide" style="background-image: url('/images/Story/5.webp');">
           <div class="story-content">
             <p class="story-sentence">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
             <p class="story-sentence">And so, every new season begins with the same timeless invitation:</p>
@@ -467,7 +481,6 @@ html_code = """
           </div>
         </div>
       </div>
-      <!-- Slider Navigation Controls -->
       <div class="slider-nav">
         <button class="nav-btn" id="prevBtn" disabled>&larr;</button>
         <button class="nav-btn" id="nextBtn">&rarr;</button>
@@ -520,12 +533,98 @@ html_code = """
   </section>
 </div>
 
-<!-- TAB: AUCTION -->
-<div id="tab-auction" class="tab-content">
-  <div class="placeholder-tab">
-    <h2>Auction</h2>
-    <p>The auction details for the next season are currently being finalized. Check back soon.</p>
-  </div>
+<!-- TAB: SCHEDULE -->
+<div id="tab-schedule" class="tab-content">
+  <section class="block">
+    <div class="block-head">
+      <h2>Tournament Schedule</h2>
+      <p>Dates, venues, and formats for all upcoming events.</p>
+    </div>
+    <div class="table-responsive">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Location</th>
+            <th>Format</th>
+            <th>Match Dates</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Mini Auction</td><td>Webex</td><td>-</td><td>Wednesday, August 12</td></tr>
+          <tr><td>Mega Auction</td><td>Webex/Airoli</td><td>All</td><td>Tuesday, August 18</td></tr>
+          <tr><td>Old School Game</td><td>Airoli</td><td>All</td><td>Wednesday, August 19</td></tr>
+          <tr><td>Bowling</td><td>Thane</td><td>Team</td><td>Wednesday, August 19</td></tr>
+          <tr><td>Foosball</td><td>Airoli</td><td>Doubles</td><td>September 2, September 9 and October 7</td></tr>
+          <tr><td>Carrom</td><td>Airoli</td><td>Doubles</td><td>September 2, September 9 and October 7</td></tr>
+          <tr><td>Table Tennis</td><td>Nesco</td><td>Doubles</td><td>September 3, September 30 and October 6</td></tr>
+          <tr><td>Badminton</td><td>Airoli</td><td>Doubles</td><td>Thursday, October 1</td></tr>
+          <tr><td>Olympic Games</td><td>Airoli</td><td>Team</td><td>Friday, October 9</td></tr>
+          <tr><td>Cricket</td><td>Airoli</td><td>Team</td><td>Friday, October 9</td></tr>
+          <tr><td>Prize Distribution</td><td>Airoli</td><td>-</td><td>Friday, October 9</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<!-- TAB: FORMAT -->
+<div id="tab-format" class="tab-content">
+  <section class="block">
+    <div class="block-head">
+      <h2>Tournament Format</h2>
+      <p>Rules, points, and mechanics driving the league.</p>
+    </div>
+    <div class="format-grid">
+      <div class="format-card">
+        <h3>How It Works</h3>
+        <ul>
+          <li>Players compete across various sports and challenges.</li>
+          <li>Each game awards points based on performance (participation/win/bonus card points).</li>
+          <li>Leaderboard will be updated weekly.</li>
+          <li>Top scoring teams win prizes + ultimate bragging rights.</li>
+        </ul>
+      </div>
+      <div class="format-card">
+        <h3>Points System</h3>
+        <ul class="points-list">
+          <li><span>Participation</span> <span class="pts">50 Points</span></li>
+          <li><span>Quarter Finals</span> <span class="pts">250 Points</span></li>
+          <li><span>Semi Finals</span> <span class="pts">500 Points</span></li>
+          <li><span>Runners Up</span> <span class="pts">750 Points</span></li>
+          <li><span>Champion</span> <span class="pts">1000 Points</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TAB: TEAMS -->
+<div id="tab-teams" class="tab-content">
+  <section class="block">
+    <div class="block-head">
+      <h2>The Franchises</h2>
+      <p>The four teams competing for glory in the TCOE League of Legends.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <h3>Gayatri Indians</h3>
+        <p>Captain <b>Gayatri Zuting</b></p>
+      </div>
+      <div class="team-card">
+        <h3>Komal Knight Riders</h3>
+        <p>Captain <b>Komal Panjwani</b></p>
+      </div>
+      <div class="team-card">
+        <h3>Pooja Super Kings</h3>
+        <p>Captain <b>Pooja Nandoskar</b></p>
+      </div>
+      <div class="team-card">
+        <h3>Royal Challengers Bhagyashree</h3>
+        <p>Captain <b>Bhagyashree Dhotre</b></p>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- TAB: FIXTURES -->
@@ -554,24 +653,16 @@ html_code = """
 </div>
 
 <script>
-/* Inject Local Base64 Images */
-const LOCAL_IMAGES = /* __IMAGES_JSON__ */;
-
 /* ============ TAB NAVIGATION ============ */
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
 
 tabBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    // Remove active state from all
     tabBtns.forEach(b => b.classList.remove('active'));
     tabContents.forEach(c => c.classList.remove('active'));
-    
-    // Add active state to clicked tab
     btn.classList.add('active');
     document.getElementById(btn.dataset.target).classList.add('active');
-    
-    // Auto-scroll to top when changing tabs
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
@@ -587,51 +678,32 @@ let storyTimeouts = [];
 
 function updateSlider() {
   track.style.transform = `translateX(-${currentSlide * 100}%)`;
-  
   prevBtn.disabled = currentSlide === 0;
   nextBtn.disabled = currentSlide === slides.length - 1;
-  
-  indicators.forEach((ind, i) => {
-    ind.classList.toggle('active', i === currentSlide);
-  });
+  indicators.forEach((ind, i) => ind.classList.toggle('active', i === currentSlide));
 
-  // Clear existing animations
   storyTimeouts.forEach(clearTimeout);
   storyTimeouts = [];
 
-  // Animate sentences for the active slide
   slides.forEach((slide, sIdx) => {
     const sentences = slide.querySelectorAll('.story-sentence');
     if (sIdx === currentSlide) {
       sentences.forEach((sentence, idx) => {
-        const t = setTimeout(() => {
-          sentence.classList.add('visible');
-        }, idx * 1200); // 1.2s delay between sentences
+        const t = setTimeout(() => sentence.classList.add('visible'), idx * 1200);
         storyTimeouts.push(t);
       });
     } else {
-      // Hide sentences on inactive slides so they re-animate when returned to
       sentences.forEach(s => s.classList.remove('visible'));
     }
   });
 }
 
-prevBtn.addEventListener('click', () => {
-  if (currentSlide > 0) { currentSlide--; updateSlider(); }
+prevBtn.addEventListener('click', () => { if (currentSlide > 0) { currentSlide--; updateSlider(); }});
+nextBtn.addEventListener('click', () => { if (currentSlide < slides.length - 1) { currentSlide++; updateSlider(); }});
+indicators.forEach(ind => {
+  ind.addEventListener('click', (e) => { currentSlide = parseInt(e.target.dataset.slide); updateSlider(); });
 });
 
-nextBtn.addEventListener('click', () => {
-  if (currentSlide < slides.length - 1) { currentSlide++; updateSlider(); }
-});
-
-indicators.forEach((ind) => {
-  ind.addEventListener('click', (e) => {
-    currentSlide = parseInt(e.target.dataset.slide);
-    updateSlider();
-  });
-});
-
-// Initialize first slide on load
 setTimeout(updateSlider, 300);
 
 /* ============ RAW TOURNAMENT DATA ============ */
@@ -743,18 +815,15 @@ const TIER_META = {
   rookie:{ label:'Rookie', hex:'#8a93a6', badge:'🌱' }
 };
 
-/* Pulls avatar safely utilizing the Pathlib Base64 Injection OR a fallback URL */
+/* Inject Local Base64 Images */
+const LOCAL_IMAGES = /* __IMAGES_JSON__ */;
+
 function roundAvatar(name, tier, size){
   const meta = TIER_META[tier];
-
-  // Safely URL encode name for standard external fallback
   const exactName = encodeURIComponent(name).replace(/'/g, "%27");
   const fallbackUrl = `https://ui-avatars.com/api/?name=${exactName}&background=transparent&color=0a0c12&bold=true`;
   
-  // Use locally served base64 image if it was found by Python pathlib
   let imgUrl = LOCAL_IMAGES[name];
-  
-  // If the pathlib method didn't find the local file, try the github raw url as a secondary backup
   if (!imgUrl) {
       imgUrl = `https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/${exactName}.jpg`;
   }
