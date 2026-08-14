@@ -35,7 +35,7 @@ ALL_PARTICIPANTS = [
     "Vibhuti Dabholkar","Vijay Chinkate","Vijay Sangale","Vishal Dubey","Vishal Shinde",
     "Wilfred Dsilva", "Esha Patel", "Parth Passi", "Kaumod Bagale", "Jagruti Chaudhari", 
     "Darshan Walwatkar", "Pritam Purohit", "Akhilesh Rai", "Soujanya Siripuram", 
-    "Yogesh Karande", "Chandrajit Yadav"
+    "Yogesh Karande", "Chandrajit Yadav", "Nitin Nakadi"
 ]
 
 def normalize_name(name):
@@ -239,12 +239,15 @@ html_code = """
   .points-list li:first-child { padding-top: 0; }
   .points-list span.pts { color: var(--gold-bright); font-weight: 700; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.05em; }
 
-  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
-  .team-card { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--line); border-radius: 16px; padding: 36px 20px; text-align: center; transition: transform 0.3s ease, border-color 0.3s ease; }
+  /* Modified Team Grid styling */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+  .team-card { background: linear-gradient(180deg, var(--panel), var(--panel-2)); border: 1px solid var(--line); border-radius: 16px; padding: 20px; text-align: center; transition: transform 0.3s ease, border-color 0.3s ease; }
   .team-card:hover { transform: translateY(-8px); border-color: var(--hextech); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-  .team-card h3 { font-family: 'Bebas Neue', sans-serif; color: var(--gold-bright); font-size: 28px; margin: 0 0 12px; letter-spacing: 0.05em; line-height: 1.2; }
-  .team-card p { color: var(--muted); margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em; }
-  .team-card p b { color: var(--cream); font-size: 15px; display: block; margin-top: 6px; }
+  .team-poster { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 20px; }
+  .team-card h3 { font-family: 'Bebas Neue', sans-serif; color: var(--gold-bright); font-size: 26px; margin: 0 0 16px; letter-spacing: 0.05em; line-height: 1.1; }
+  .team-role { color: var(--muted); margin: 0 0 12px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .team-role b { color: var(--cream); font-size: 14px; display: block; margin-top: 4px; text-transform: none; letter-spacing: normal; font-weight: 500; }
+  .team-role:last-child { margin-bottom: 0; }
 
   /* ---------- Chapter 1: Story Slider ---------- */
   .story-slider-wrapper {
@@ -353,6 +356,7 @@ html_code = """
     border-radius: 8px; padding: 6px;
   }
   .pcard-stats b, .modal-stats b, .tt-stats b {display:block; color:var(--gold-bright); font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.02em; line-height:1;}
+
   .champ-ribbon{position:absolute; top:12px; right:-32px; transform:rotate(40deg); background:var(--maroon); color:var(--gold-bright); font-size:9.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:4px 38px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:3;}
   .no-results{text-align:center; color:var(--muted); padding:40px 0; font-size:14px; display:none;}
 
@@ -441,14 +445,14 @@ html_code = """
     <div class="story-slider-wrapper">
       <div class="story-track" id="storyTrack">
         <!-- Slide 1 -->
-        <div class="story-slide" style="background-image: url('/images/Story/1.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.jpg');">
           <div class="story-content">
             <p class="story-sentence">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
             <p class="story-sentence">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
           </div>
         </div>
         <!-- Slide 2 -->
-        <div class="story-slide" style="background-image: url('/images/Story/2.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.jpg');">
           <div class="story-content">
             <p class="story-sentence">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
             <p class="story-sentence story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</p>
@@ -458,7 +462,7 @@ html_code = """
           </div>
         </div>
         <!-- Slide 3 -->
-        <div class="story-slide" style="background-image: url('/images/Story/3.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.jpg');">
           <div class="story-content">
             <p class="story-sentence">But the journey was not easy.</p>
             <p class="story-sentence">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
@@ -466,14 +470,14 @@ html_code = """
           </div>
         </div>
         <!-- Slide 4 -->
-        <div class="story-slide" style="background-image: url('/images/Story/4.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.jpg');">
           <div class="story-content">
             <p class="story-sentence">At last, the fellowship unveiled The TCOE League of Legends.</p>
             <p class="story-sentence">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
           </div>
         </div>
         <!-- Slide 5 -->
-        <div class="story-slide" style="background-image: url('/images/Story/5.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.jpg');">
           <div class="story-content">
             <p class="story-sentence">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
             <p class="story-sentence">And so, every new season begins with the same timeless invitation:</p>
@@ -607,22 +611,39 @@ html_code = """
       <p>The four teams competing for glory in the TCOE League of Legends.</p>
     </div>
     <div class="team-grid">
+      
       <div class="team-card">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Gayatri%20Indians.jpg" alt="Gayatri Indians">
         <h3>Gayatri Indians</h3>
-        <p>Captain <b>Gayatri Zuting</b></p>
+        <p class="team-role">Captain <b>Gayatri Zuting</b></p>
+        <p class="team-role">Vice Captains <b>Sanket Patil & Johnson Thomas</b></p>
+        <p class="team-role">Squad <b>Amitabh Singh, Akhilesh Rai</b></p>
       </div>
+      
       <div class="team-card">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Komal%20Knight%20Riders.jpg" alt="Komal Knight Riders">
         <h3>Komal Knight Riders</h3>
-        <p>Captain <b>Komal Panjwani</b></p>
+        <p class="team-role">Captain <b>Komal Panjwani</b></p>
+        <p class="team-role">Vice Captains <b>Umesh Gawde & Avinash Gowda</b></p>
+        <p class="team-role">Squad <b>Ravi Chavan</b></p>
       </div>
+      
       <div class="team-card">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Pooja%20Super%20Kings.jpg" alt="Pooja Super Kings">
         <h3>Pooja Super Kings</h3>
-        <p>Captain <b>Pooja Nandoskar</b></p>
+        <p class="team-role">Captain <b>Pooja Nandoskar</b></p>
+        <p class="team-role">Vice Captains <b>Vijay Chinkate & Vishal Shinde</b></p>
+        <p class="team-role">Squad <b>Nitin Nakadi</b></p>
       </div>
+      
       <div class="team-card">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Royal%20Challengers%20Bhagyashree.jpg" alt="Royal Challengers Bhagyashree">
         <h3>Royal Challengers Bhagyashree</h3>
-        <p>Captain <b>Bhagyashree Dhotre</b></p>
+        <p class="team-role">Captain <b>Bhagyashree Dhotre</b></p>
+        <p class="team-role">Vice Captains <b>Sanskar Bagwe & Pramod Patel</b></p>
+        <p class="team-role">Squad <b>Avinash Chorage, Rachita Harit</b></p>
       </div>
+
     </div>
   </section>
 </div>
@@ -755,7 +776,7 @@ const TOURNAMENTS = [
 const NEW_ROOKIES = [
   "Esha Patel", "Parth Passi", "Kaumod Bagale", "Jagruti Chaudhari",
   "Darshan Walwatkar", "Pritam Purohit", "Akhilesh Rai",
-  "Soujanya Siripuram", "Yogesh Karande", "Chandrajit Yadav"
+  "Soujanya Siripuram", "Yogesh Karande", "Chandrajit Yadav", "Nitin Nakadi"
 ];
 
 const ALL_PARTICIPANTS = [
@@ -815,9 +836,7 @@ const TIER_META = {
   rookie:{ label:'Rookie', hex:'#8a93a6', badge:'🌱' }
 };
 
-/* Inject Local Base64 Images */
-const LOCAL_IMAGES = /* __IMAGES_JSON__ */;
-
+/* Pulls avatar safely utilizing the Pathlib Base64 Injection OR a fallback URL */
 function roundAvatar(name, tier, size){
   const meta = TIER_META[tier];
   const exactName = encodeURIComponent(name).replace(/'/g, "%27");
