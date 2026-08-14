@@ -45,8 +45,7 @@ def normalize_name(name):
 image_b64_map = {}
 
 if images_dir.exists() and images_dir.is_dir():
-    # Build a lookup of existing files (e.g. "esha_patel.jpg" -> "eshapatel")
-    local_files = {normalize_name(p.stem): p for p in images_dir.glob("*") if p.suffix.lower() in ['.jpg', '.jpeg', '.png']}
+    local_files = {normalize_name(p.stem): p for p in images_dir.glob("*") if p.suffix.lower() in ['.jpg', '.jpeg', '.png', '.webp']}
     
     for player in ALL_PARTICIPANTS:
         norm_player = normalize_name(player)
@@ -54,7 +53,13 @@ if images_dir.exists() and images_dir.is_dir():
             try:
                 with open(local_files[norm_player], "rb") as f:
                     b64_str = base64.b64encode(f.read()).decode("utf-8")
-                    mime_type = "image/png" if local_files[norm_player].suffix.lower() == '.png' else "image/jpeg"
+                    suffix = local_files[norm_player].suffix.lower()
+                    if suffix == '.png':
+                        mime_type = "image/png"
+                    elif suffix == '.webp':
+                        mime_type = "image/webp"
+                    else:
+                        mime_type = "image/jpeg"
                     image_b64_map[player] = f"data:{mime_type};base64,{b64_str}"
             except Exception as e:
                 pass
@@ -364,6 +369,7 @@ html_code = """
   @keyframes cardPress { 0% { transform: translateY(-8px) scale(1.03); } 50% { transform: translateY(0px) scale(0.96); border-color: var(--hextech); } 100% { transform: translateY(-8px) scale(1.03); border-color: var(--hextech); } }
   .pcard.slotting { animation: cardPress 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; pointer-events: none; }
 
+  /* ---------- Chapter 4: Full roster grid ---------- */
   .lineup-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:26px 14px; justify-content: center; }
   .roster-card{position:relative; text-align:center; cursor:pointer;}
   .roster-card .avatar-frame{transition:transform .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin: 0 auto; width: 90px;}
@@ -386,6 +392,7 @@ html_code = """
 
   @media (max-width:760px){ .lineup-grid{grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); gap:20px 8px;} }
 
+  /* ---------- Modal ---------- */
   .overlay{position:fixed; inset:0; background:rgba(6,7,11,0.78); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; z-index:50; padding:24px;}
   .overlay.show{display:flex;}
   .modal{width:100%; max-width:480px; max-height:88vh; overflow-y:auto; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--line); border-radius:20px; position:relative; box-shadow:0 30px 80px rgba(0,0,0,0.6); animation:popBounce .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;}
@@ -445,14 +452,14 @@ html_code = """
     <div class="story-slider-wrapper">
       <div class="story-track" id="storyTrack">
         <!-- Slide 1 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/1.jpg');">
           <div class="story-content">
             <p class="story-sentence">Long ago, hidden behind glowing screens and endless lines of code, stood a kingdom called the Technical Center of Excellence.</p>
             <p class="story-sentence">Its people were brilliant builders, solving impossible problems every day—but many heroes knew each other only through meetings and emails.</p>
           </div>
         </div>
         <!-- Slide 2 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/2.jpg');">
           <div class="story-content">
             <p class="story-sentence">One evening, a small fellowship of dreamers gathered and asked a simple question:</p>
             <p class="story-sentence story-quote">"If we can build extraordinary solutions together, why can't we build extraordinary memories together?"</p>
@@ -462,7 +469,7 @@ html_code = """
           </div>
         </div>
         <!-- Slide 3 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/3.jpg');">
           <div class="story-content">
             <p class="story-sentence">But the journey was not easy.</p>
             <p class="story-sentence">The dragons of Doubt, Chaos, and Logistics stood in their way. Schedules clashed, plans changed, venues vanished, and countless challenges tested their resolve.</p>
@@ -470,14 +477,14 @@ html_code = """
           </div>
         </div>
         <!-- Slide 4 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/4.jpg');">
           <div class="story-content">
             <p class="story-sentence">At last, the fellowship unveiled The TCOE League of Legends.</p>
             <p class="story-sentence">What began as a tournament became a tradition. Colleagues became teammates, departments became one kingdom, and every match created stories that would be remembered far longer than the final score.</p>
           </div>
         </div>
         <!-- Slide 5 -->
-        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.webp');">
+        <div class="story-slide" style="background-image: url('https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Story/5.jpg');">
           <div class="story-content">
             <p class="story-sentence">They soon realized the greatest treasure was never the trophy—it was the friendships forged, the leaders discovered, and the culture they built together.</p>
             <p class="story-sentence">And so, every new season begins with the same timeless invitation:</p>
@@ -613,7 +620,7 @@ html_code = """
     <div class="team-grid">
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Gayatri%20Indians.webp" alt="Gayatri Indians">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Gayatri%20Indians.jpg" alt="Gayatri Indians">
         <h3>Gayatri Indians</h3>
         <p class="team-role">Captain <b>Gayatri Zuting</b></p>
         <p class="team-role">Vice Captains <b>Sanket Patil & Johnson Thomas</b></p>
@@ -621,7 +628,7 @@ html_code = """
       </div>
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Komal%20Knight%20Riders.webp" alt="Komal Knight Riders">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Komal%20Knight%20Riders.jpg" alt="Komal Knight Riders">
         <h3>Komal Knight Riders</h3>
         <p class="team-role">Captain <b>Komal Panjwani</b></p>
         <p class="team-role">Vice Captains <b>Umesh Gawde & Avinash Gowda</b></p>
@@ -629,7 +636,7 @@ html_code = """
       </div>
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Pooja%20Super%20Kings.webp" alt="Pooja Super Kings">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Pooja%20Super%20Kings.jpg" alt="Pooja Super Kings">
         <h3>Pooja Super Kings</h3>
         <p class="team-role">Captain <b>Pooja Nandoskar</b></p>
         <p class="team-role">Vice Captains <b>Vijay Chinkate & Vishal Shinde</b></p>
@@ -637,8 +644,8 @@ html_code = """
       </div>
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Royal%20Challengers%20Bhagyashree.webp" alt="Royal Challengers Bhagyashree">
-        <h3>Royal Challengers Bhagyashree</h3>
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Royal%20Challengers%20Bangalore.jpg" alt="Royal Challengers Bangalore">
+        <h3>Royal Challengers Bangalore</h3>
         <p class="team-role">Captain <b>Bhagyashree Dhotre</b></p>
         <p class="team-role">Vice Captains <b>Sanskar Bagwe & Pramod Patel</b></p>
         <p class="team-role">Squad <b>Avinash Chorage, Rachita Harit</b></p>
@@ -674,6 +681,9 @@ html_code = """
 </div>
 
 <script>
+/* Inject Local Base64 Images */
+const LOCAL_IMAGES = /* __IMAGES_JSON__ */;
+
 /* ============ TAB NAVIGATION ============ */
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
@@ -902,10 +912,15 @@ function quoteFor(name){
   return QUOTE_BANK[hashStr(name) % QUOTE_BANK.length];
 }
 
+/* Replaced older flatMap with universally compatible set approach */
+const allEvents = [];
+TOURNAMENTS.forEach(t => t.events.forEach(e => allEvents.push(e.event)));
+const uniqueEventsCount = new Set(allEvents).size;
+
 document.getElementById('statStrip').innerHTML = `
   <div class="stat"><b>${TOURNAMENTS.length}</b><span>Editions Played</span></div>
   <div class="stat"><b>${ALL_PARTICIPANTS.length}</b><span>Players Involved</span></div>
-  <div class="stat"><b>${new Set(TOURNAMENTS.flatMap(t=>t.events.map(e=>e.event))).size}+</b><span>Events Contested</span></div>
+  <div class="stat"><b>${uniqueEventsCount}+</b><span>Events Contested</span></div>
   <div class="stat"><b>${TOURNAMENTS.length}</b><span>Championship Titles</span></div>
 `;
 
