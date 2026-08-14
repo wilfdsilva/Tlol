@@ -613,7 +613,7 @@ html_code = """
     <div class="team-grid">
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Gayatri%20Indians.jpg" alt="Gayatri Indians">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Gayatri%20Indians.webp" alt="Gayatri Indians">
         <h3>Gayatri Indians</h3>
         <p class="team-role">Captain <b>Gayatri Zuting</b></p>
         <p class="team-role">Vice Captains <b>Sanket Patil & Johnson Thomas</b></p>
@@ -621,7 +621,7 @@ html_code = """
       </div>
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Komal%20Knight%20Riders.jpg" alt="Komal Knight Riders">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Komal%20Knight%20Riders.webp" alt="Komal Knight Riders">
         <h3>Komal Knight Riders</h3>
         <p class="team-role">Captain <b>Komal Panjwani</b></p>
         <p class="team-role">Vice Captains <b>Umesh Gawde & Avinash Gowda</b></p>
@@ -629,7 +629,7 @@ html_code = """
       </div>
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Pooja%20Super%20Kings.jpg" alt="Pooja Super Kings">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Pooja%20Super%20Kings.webp" alt="Pooja Super Kings">
         <h3>Pooja Super Kings</h3>
         <p class="team-role">Captain <b>Pooja Nandoskar</b></p>
         <p class="team-role">Vice Captains <b>Vijay Chinkate & Vishal Shinde</b></p>
@@ -637,7 +637,7 @@ html_code = """
       </div>
       
       <div class="team-card">
-        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Royal%20Challengers%20Bhagyashree.jpg" alt="Royal Challengers Bhagyashree">
+        <img class="team-poster" src="https://raw.githubusercontent.com/wilfdsilva/Tlol/main/images/Team%20Poster/Royal%20Challengers%20Bhagyashree.webp" alt="Royal Challengers Bhagyashree">
         <h3>Royal Challengers Bhagyashree</h3>
         <p class="team-role">Captain <b>Bhagyashree Dhotre</b></p>
         <p class="team-role">Vice Captains <b>Sanskar Bagwe & Pramod Patel</b></p>
