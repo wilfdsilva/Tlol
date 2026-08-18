@@ -628,7 +628,7 @@ html_code = """
         <p class="team-role">Grade 1 <b>Adnan Shaikh</b></p>
         <p class="team-role">Grade 2 <b>Somansh Datta</b></p>
         <p class="team-role">Grade 3 <b>Saurabh Mahadik</b></p>
-        <p class="team-role">Grade 4 <b>Soujanya Siripuram</b><b>Rahul Arjun</b><b>Kiran Padwal</b></p>
+        <p class="team-role">Grade 4 <b>Soujanya Siripuram</b><b>Rahul Arjun</b><b>Kiran Padwal</b><b>Rahul Pokharkar</b><b>Irshad Darji</b></p>
       </div>
       
       <div class="team-card">
@@ -640,7 +640,7 @@ html_code = """
         <p class="team-role">Grade 1 <b>Pritesh Menon</b></p>
         <p class="team-role">Grade 2 <b>Lalit Chavan</b></p>
         <p class="team-role">Grade 3 <b>Hitesh Ghadigaonkar</b></p>
-        <p class="team-role">Grade 4 <b>Bijal Gala</b><b>Esakki Shummugavel</b><b>Arvind Nainar</b><b>Kaumod Bagale</b><b>N Pratap Kumar</b><b>Mayur Pawar</b></p>
+        <p class="team-role">Grade 4 <b>Bijal Gala</b><b>Esakki Shummugavel</b><b>Arvind Nainar</b><b>Kaumod Bagale</b><b>N Pratap Kumar</b><b>Mayur Pawar</b><b>Suraj Kamerkar</b></p>
       </div>
       
       <div class="team-card">
@@ -652,7 +652,7 @@ html_code = """
         <p class="team-role">Grade 1 <b>Dhananjay Kulkarni</b></p>
         <p class="team-role">Grade 2 <b>Blessen Thomas</b></p>
         <p class="team-role">Grade 3 <b>Kishansingh Devda</b></p>
-        <p class="team-role">Grade 4 <b>Esha Patel</b></p>
+        <p class="team-role">Grade 4 <b>Esha Patel</b><b>Ravi Khanra</b><b>Chandrajit Yadav</b><b>Pritam Purohit</b><b>Darshan Walwatkar</b><b>Nilesh Mulik</b></p>
       </div>
       
       <div class="team-card">
@@ -664,7 +664,7 @@ html_code = """
         <p class="team-role">Grade 1 <b>Wilfred Dsilva</b></p>
         <p class="team-role">Grade 2 <b>Umesh Tank</b></p>
         <p class="team-role">Grade 3 <b>Asif Khan</b></p>
-        <p class="team-role">Grade 4 <b>Yogesh Karande</b><b>Arijit Ghosh</b></p>
+        <p class="team-role">Grade 4 <b>Yogesh Karande</b><b>Arijit Ghosh</b><b>Bhaskar Patil</b><b>Parth Passi</b><b>Bishal Pandit</b></p>
       </div>
 
     </div>
@@ -786,7 +786,7 @@ const TOURNAMENTS = [
   },
   {
     id:'tlol3', label:'TLOL 3', edition:'Bollywood Edition', year:2025, icon:'🎬',
-    champion:{ team:"Badshah Blasters",captain: "Somansh Datta" members:["Pritesh Menon","Samiksha Prabhu","Umesh Gawde","Wilfred Dsilva","Gayatri Zuting","Hitesh Ghadigaonkar","Kiran Padwal","N Pratap Kumar","Pooja Nandoskar","Saurabh Mahadik","Vijay Chinkate","Vishal Shinde"] },
+    champion:{ team:"Badshah Blasters",captain: "Somansh Datta", members:["Pritesh Menon","Samiksha Prabhu","Umesh Gawde","Wilfred Dsilva","Gayatri Zuting","Hitesh Ghadigaonkar","Kiran Padwal","N Pratap Kumar","Pooja Nandoskar","Saurabh Mahadik","Vijay Chinkate","Vishal Shinde"] },
     events:[
       {event:"Table Tennis &middot; Doubles", winners:["Pritesh Menon","Wilfred Dsilva"]},
       {event:"Carrom &middot; Doubles", winners:["Jay Jagad","Umesh Tank"]},
