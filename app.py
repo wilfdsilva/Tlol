@@ -838,8 +838,10 @@ function ensurePlayer(name){
   return players[name];
 }
 ALL_PARTICIPANTS.forEach(ensurePlayer);
+
+// FIXED: Now we combine the captain and members into one array before iterating, so the captain gets stats!
 TOURNAMENTS.forEach(t=>{
-  t.champion.members.forEach(m=>{ ensurePlayer(m).championships.push({year:t.year, team:t.champion.team, edition:t.edition}); });
+  [t.champion.captain, ...t.champion.members].forEach(m=>{ ensurePlayer(m).championships.push({year:t.year, team:t.champion.team, edition:t.edition}); });
   t.events.forEach(ev=>{ (ev.winners||[]).forEach(w=>{ ensurePlayer(w).events.push({year:t.year, edition:t.edition, event:ev.event}); }); });
   const {winners, count} = computeYearMVP(t);
   winners.forEach(w=>{ ensurePlayer(w).yearMVP.push({year:t.year, edition:t.edition, count}); });
@@ -949,6 +951,8 @@ TOURNAMENTS.forEach(t=>{
   }).join('');
   const el = document.createElement('div');
   el.className = 'case';
+  
+  // FIXED: Roster grid now includes the captain explicitly with the gold crown style and increases player count by 1.
   el.innerHTML = `
     <div class="case-top">
       <div class="trophy-mark">${t.icon}</div>
@@ -964,8 +968,11 @@ TOURNAMENTS.forEach(t=>{
     </div>
     <button class="case-toggle" type="button"><span class="txt">View full championship roster</span><span class="chev">▾</span></button>
     <div class="roster">
-      <div class="roster-label">${t.champion.team} &middot; ${t.champion.members.length} players</div>
-      <div class="roster-grid">${t.champion.members.map(m=>`<span>${m}</span>`).join('')}</div>
+      <div class="roster-label">${t.champion.team} &middot; ${t.champion.members.length + 1} players</div>
+      <div class="roster-grid">
+        <span style="border-color: var(--gold-bright); color: var(--gold-bright);">👑 ${t.champion.captain} (C)</span>
+        ${t.champion.members.map(m=>`<span>${m}</span>`).join('')}
+      </div>
     </div>
   `;
   const btn = el.querySelector('.case-toggle');
