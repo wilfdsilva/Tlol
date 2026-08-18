@@ -419,6 +419,20 @@ html_code = """
 
   footer{text-align:center; padding:50px 6vw 60px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line);}
   footer b{color:var(--gold-bright);}
+  
+  /* Events Hub specific styles */
+  .events-hub-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 85vh;
+    min-height: 800px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
 </style>
 </head>
 <body>
@@ -436,8 +450,7 @@ html_code = """
     <button class="tab-btn" data-target="tab-schedule">Schedule</button>
     <button class="tab-btn" data-target="tab-format">Format</button>
     <button class="tab-btn" data-target="tab-teams">Teams</button>
-    <button class="tab-btn" data-target="tab-fixtures">Fixtures</button>
-    <button class="tab-btn" data-target="tab-dashboard">Dashboard</button>
+    <button class="tab-btn" data-target="tab-events">Events Hub</button>
   </div>
 </header>
 
@@ -671,12 +684,18 @@ html_code = """
   </section>
 </div>
 
-<!-- TAB: EVENTS HUB -->
-<div id="tab-fixtures" class="tab-content">
-  <div class="placeholder-tab">
-    <h2>Fixtures</h2>
-    <p>The match schedule, Player stats, historical data analysis, and advanced metrics will be updated here once the teams are drawn.</p>
-  </div>
+<!-- TAB: EVENTS HUB (EMBEDDED DASHBOARD) -->
+<div id="tab-events" class="tab-content">
+  <section class="block">
+    <div class="block-head">
+      <h2>Events Hub</h2>
+      <p>Live match schedule, player stats, historical data analysis, and advanced metrics.</p>
+    </div>
+    
+    <div class="events-hub-container">
+      <iframe src="https://tlol4-dashboard.streamlit.app/?embed=true" width="100%" height="100%" style="border:none; display:block;"></iframe>
+    </div>
+  </section>
 </div>
 
 <footer>
