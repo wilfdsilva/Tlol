@@ -423,9 +423,8 @@ html_code = """
   /* Events Hub specific styles */
   .events-hub-container {
     width: 100%;
-    max-width: 1400px;
     margin: 0 auto;
-    height: 85vh;
+    height: 90vh; /* Increased height to give maximum room */
     min-height: 800px;
     border-radius: 16px;
     overflow: hidden;
@@ -458,7 +457,6 @@ html_code = """
 <div id="tab-history" class="tab-content active">
   <section class="block" id="story">
     <div class="block-head">
-      <div class="kicker">Chapter One</div>
       <h2>The Legend of TCOE League of Legends</h2>
     </div>
 
@@ -524,7 +522,6 @@ html_code = """
 <div id="tab-hof" class="tab-content">
   <section class="block" id="cabinet">
     <div class="block-head">
-      <div class="kicker">Chapter Two</div>
       <h2>Yearly Trophy Cabinet</h2>
       <p>Every edition, glassed in. The Year MVP is whoever won the most events that year &mdash; tap a case to open the full winning roster.</p>
     </div>
@@ -534,7 +531,6 @@ html_code = """
 
   <section class="block" id="wof">
     <div class="block-head">
-      <div class="kicker">Chapter Three</div>
       <h2>Walk of Fame</h2>
       <p>Every player who ever left the TLOL floor with a trophy, styled as a Rift-ready summoner icon &mdash; rank border generated from their stats. Click a card for the full story.</p>
     </div>
@@ -548,7 +544,6 @@ html_code = """
 
   <section class="block" id="lineup">
     <div class="block-head">
-      <div class="kicker">Chapter Four</div>
       <h2>The Full Roster Line-Up</h2>
       <p>Every single person who's ever played TLOL, ranked by stats &mdash; strongest record first. Hover anyone to see who they are and what they won.</p>
     </div>
@@ -560,10 +555,6 @@ html_code = """
 <!-- TAB: SCHEDULE -->
 <div id="tab-schedule" class="tab-content">
   <section class="block">
-    <div class="block-head">
-      <h2>Tournament Schedule</h2>
-      <p>Dates, venues, and formats for all upcoming events.</p>
-    </div>
     <div class="table-responsive">
       <table class="styled-table">
         <thead>
@@ -595,10 +586,6 @@ html_code = """
 <!-- TAB: FORMAT -->
 <div id="tab-format" class="tab-content">
   <section class="block">
-    <div class="block-head">
-      <h2>Tournament Format</h2>
-      <p>Rules, points, and mechanics driving the league.</p>
-    </div>
     <div class="format-grid">
       <div class="format-card">
         <h3>How It Works</h3>
@@ -626,10 +613,6 @@ html_code = """
 <!-- TAB: TEAMS -->
 <div id="tab-teams" class="tab-content">
   <section class="block">
-    <div class="block-head">
-      <h2>The Franchises</h2>
-      <p>The four teams competing for glory in the TCOE League of Legends.</p>
-    </div>
     <div class="team-grid">
       
       <div class="team-card">
@@ -686,12 +669,7 @@ html_code = """
 
 <!-- TAB: EVENTS HUB (EMBEDDED DASHBOARD) -->
 <div id="tab-events" class="tab-content">
-  <section class="block">
-    <div class="block-head">
-      <h2>Events Hub</h2>
-      <p>Live match schedule, player stats, historical data analysis, and advanced metrics.</p>
-    </div>
-    
+  <section class="block" style="padding-top: 30px;">
     <div class="events-hub-container">
       <iframe src="https://tlol4-dashboard.streamlit.app/?embed=true" width="100%" height="100%" style="border:none; display:block;"></iframe>
     </div>
