@@ -620,11 +620,7 @@ html_code = """
         <h3>Gayatri Indians</h3>
         <p class="team-role">Captain <b>Gayatri Zuting</b></p>
         <p class="team-role">Vice Captains <b>Sanket Patil</b><b>Johnson Thomas</b></p>
-        <p class="team-role">Leads <b>Amitabh Singh</b><b>Akhilesh Rai</b></p>
-        <p class="team-role">Grade 1 <b>Adnan Shaikh</b></p>
-        <p class="team-role">Grade 2 <b>Somansh Datta</b></p>
-        <p class="team-role">Grade 3 <b>Saurabh Mahadik</b></p>
-        <p class="team-role">Grade 4 <b>Soujanya Siripuram</b><b>Rahul Arjun</b><b>Kiran Padwal</b><b>Rahul Pokharkar</b><b>Irshad Darji</b></p>
+        <p class="team-role">Squad <b>Amitabh Singh</b><b>Akhilesh Rai</b><b>Adnan Shaikh</b><b>Somansh Datta</b><b>Saurabh Mahadik</b><b>Soujanya Siripuram</b><b>Rahul Arjun</b><b>Kiran Padwal</b><b>Rahul Pokharkar</b><b>Irshad Darji</b></p>
       </div>
       
       <div class="team-card">
@@ -632,11 +628,7 @@ html_code = """
         <h3>Komal Knight Riders</h3>
         <p class="team-role">Captain <b>Komal Panjwani</b></p>
         <p class="team-role">Vice Captains <b>Umesh Gawde</b><b>Avinash Gowda</b></p>
-        <p class="team-role">Leads <b>Ravi Chavan</b></p>
-        <p class="team-role">Grade 1 <b>Pritesh Menon</b></p>
-        <p class="team-role">Grade 2 <b>Lalit Chavan</b></p>
-        <p class="team-role">Grade 3 <b>Hitesh Ghadigaonkar</b></p>
-        <p class="team-role">Grade 4 <b>Bijal Gala</b><b>Esakki Shummugavel</b><b>Arvind Nainar</b><b>Kaumod Bagale</b><b>N Pratap Kumar</b><b>Mayur Pawar</b><b>Suraj Kamerkar</b></p>
+        <p class="team-role">Squad <b>Ravi Chavan</b><b>Pritesh Menon</b><b>Lalit Chavan</b><b>Hitesh Ghadigaonkar</b><b>Bijal Gala</b><b>Esakki Shummugavel</b><b>Arvind Nainar</b><b>Kaumod Bagale</b><b>N Pratap Kumar</b><b>Mayur Pawar</b><b>Suraj Kamerkar</b></p>
       </div>
       
       <div class="team-card">
@@ -644,11 +636,7 @@ html_code = """
         <h3>Pooja Super Kings</h3>
         <p class="team-role">Captain <b>Pooja Nandoskar</b></p>
         <p class="team-role">Vice Captains <b>Vijay Chinkate</b><b>Vishal Shinde</b></p>
-        <p class="team-role">Leads <b>Nitin Nakadi</b></p>
-        <p class="team-role">Grade 1 <b>Dhananjay Kulkarni</b></p>
-        <p class="team-role">Grade 2 <b>Blessen Thomas</b></p>
-        <p class="team-role">Grade 3 <b>Kishansingh Devda</b></p>
-        <p class="team-role">Grade 4 <b>Esha Patel</b><b>Ravi Khanra</b><b>Chandrajit Yadav</b><b>Pritam Purohit</b><b>Darshan Walwatkar</b><b>Nilesh Mulik</b></p>
+        <p class="team-role">Squad <b>Nitin Nakadi</b><b>Dhananjay Kulkarni</b><b>Blessen Thomas</b><b>Kishansingh Devda</b><b>Esha Patel</b><b>Ravi Khanra</b><b>Chandrajit Yadav</b><b>Pritam Purohit</b><b>Darshan Walwatkar</b><b>Nilesh Mulik</b></p>
       </div>
       
       <div class="team-card">
@@ -656,13 +644,7 @@ html_code = """
         <h3>Royal Challengers Bhagyashree</h3>
         <p class="team-role">Captain <b>Bhagyashree Dhotre</b></p>
         <p class="team-role">Vice Captains <b>Sanskar Bagwe</b><b>Pramod Patel</b></p>
-        <p class="team-role">Leads <b>Avinash Chorage</b><b>Rachita Harit</b></p>
-        <p class="team-role">Grade 1 <b>Wilfred Dsilva</b></p>
-        <p class="team-role">Grade 2 <b>Umesh Tank</b></p>
-        <p class="team-role">Grade 3 <b>Asif Khan</b></p>
-        <p class="team-role">Grade 4 <b>Yogesh Karande</b><b>Arijit Ghosh</b><b>Bhaskar Patil</b><b>Parth Passi</b><b>Bishal Pandit</b></p>
-      </div>
-
+        <p class="team-role">Squad <b>Avinash Chorage</b><b>Rachita Harit</b><b>Wilfred Dsilva</b><b>Umesh Tank</b><b>Asif Khan</b><b>Yogesh Karande</b><b>Arijit Ghosh</b><b>Bhaskar Patil</b><b>Parth Passi</b><b>Bishal Pandit</b></p>
     </div>
   </section>
 </div>
