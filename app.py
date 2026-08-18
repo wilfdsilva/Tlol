@@ -428,7 +428,7 @@ html_code = """
 <!-- Global Header with Tabs -->
 <header class="main-header">
   <div class="eyebrow">Est. 2023 &middot; TCOE League of Legends</div>
-  <b class="subhead">Three editions. One legendary rivalry. Every champion, MVP, and epic team name lives here forever.</b>
+  <p class="subhead">Three editions. One legendary rivalry. Every champion, MVP, and epic team name lives here forever.</p>
 
   <div class="tab-nav">
     <button class="tab-btn active" data-target="tab-history">History</button>
