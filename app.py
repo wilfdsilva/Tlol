@@ -671,19 +671,11 @@ html_code = """
   </section>
 </div>
 
-<!-- TAB: FIXTURES -->
+<!-- TAB: EVENTS HUB -->
 <div id="tab-fixtures" class="tab-content">
   <div class="placeholder-tab">
     <h2>Fixtures</h2>
-    <p>The match schedule will be updated here once the teams are drawn.</p>
-  </div>
-</div>
-
-<!-- TAB: DASHBOARD -->
-<div id="tab-dashboard" class="tab-content">
-  <div class="placeholder-tab">
-    <h2>Dashboard</h2>
-    <p>Player stats, historical data analysis, and advanced metrics coming soon.</p>
+    <p>The match schedule, Player stats, historical data analysis, and advanced metrics will be updated here once the teams are drawn.</p>
   </div>
 </div>
 
