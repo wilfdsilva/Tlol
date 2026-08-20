@@ -634,7 +634,7 @@ html_code = """
         <h3>Gayatri Indians</h3>
         <p class="team-role">Captain <b>Gayatri Zuting</b></p>
         <p class="team-role">Vice Captains <b>Sanket Patil</b><b>Johnson Thomas</b></p>
-        <p class="team-role">Squad <p style="color: red;"><b>Amitabh Singh</b></p><b>Akhilesh Rai</b><b>Adnan Shaikh</b><b>Somansh Datta</b><b>Saurabh Mahadik</b><b>Soujanya Siripuram</b><b>Rahul Arjun</b><b>Kiran Padwal</b><b>Rahul Pokharkar</b><b>Irshad Darji</b></p>
+        <p class="team-role">Squad <p style="color: red;"><b>Amitabh Singh</b><b>Akhilesh Rai</b></p><b>Adnan Shaikh</b><b>Somansh Datta</b><b>Saurabh Mahadik</b><b>Soujanya Siripuram</b><b>Rahul Arjun</b><b>Kiran Padwal</b><b>Rahul Pokharkar</b><b>Irshad Darji</b></p>
       </div>
       
       <div class="team-card">
