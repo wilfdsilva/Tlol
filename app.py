@@ -576,20 +576,21 @@ html_code = """
             <th>Location</th>
             <th>Format</th>
             <th>Match Dates</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Mini Auction</td><td>Webex</td><td>-</td><td>Wednesday, August 12</td></tr>
-          <tr><td>Mega Auction</td><td>Webex/Airoli</td><td>All</td><td>Tuesday, August 18</td></tr>
-          <tr><td>Old School Game</td><td>Airoli</td><td>All</td><td>Wednesday, August 19</td></tr>
-          <tr><td>Bowling</td><td>Thane</td><td>Team</td><td>Wednesday, August 19</td></tr>
-          <tr><td>Foosball</td><td>Airoli</td><td>Doubles</td><td>September 2, September 9 and October 7</td></tr>
-          <tr><td>Carrom</td><td>Airoli</td><td>Doubles</td><td>September 2, September 9 and October 7</td></tr>
-          <tr><td>Table Tennis</td><td>Nesco</td><td>Doubles</td><td>September 3, September 30 and October 6</td></tr>
-          <tr><td>Badminton</td><td>Airoli</td><td>Doubles</td><td>Thursday, October 1</td></tr>
-          <tr><td>Olympic Games</td><td>Airoli</td><td>Team</td><td>Friday, October 9</td></tr>
-          <tr><td>Cricket</td><td>Airoli</td><td>Team</td><td>Friday, October 9</td></tr>
-          <tr><td>Prize Distribution</td><td>Airoli</td><td>-</td><td>Friday, October 9</td></tr>
+          <tr><td>Mini Auction</td><td>Webex</td><td>-</td><td>Wednesday, August 12</td><td>Completed</td></tr>
+          <tr><td>Mega Auction</td><td>Webex/Airoli</td><td>All</td><td>Tuesday, August 18</td><td>Completed</td></tr>
+          <tr><td>Old School Game</td><td>Airoli</td><td>All</td><td>Wednesday, August 19</td><td>Completed</td></tr>
+          <tr><td>Bowling</td><td>Thane</td><td>Team</td><td>Wednesday, August 19</td><td>Completed</td></tr>
+          <tr><td>Foosball</td><td>Airoli</td><td>Doubles</td><td>September 2, September 9 and October 7</td><td>-</td></tr>
+          <tr><td>Carrom</td><td>Airoli</td><td>Doubles</td><td>September 2, September 9 and October 7</td><td>-</td></tr>
+          <tr><td>Table Tennis</td><td>Nesco</td><td>Doubles</td><td>September 3, September 30 and October 6</td><td>-</td></tr>
+          <tr><td>Badminton</td><td>Airoli</td><td>Doubles</td><td>Thursday, October 1</td><td>-</td></tr>
+          <tr><td>Olympic Games</td><td>Airoli</td><td>Team</td><td>Friday, October 9</td><td>-</td></tr>
+          <tr><td>Cricket</td><td>Airoli</td><td>Team</td><td>Friday, October 9</td><td>-</td></tr>
+          <tr><td>Prize Distribution</td><td>Airoli</td><td>-</td><td>Friday, October 9</td><td>-</td></tr>
         </tbody>
       </table>
     </div>
