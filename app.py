@@ -13,10 +13,13 @@ st.set_page_config(
 )
 
 # -------------------------------------------------------------------
-# PATHLIB METHOD: Safely load local images regardless of Streamlit Cloud working directory
+# PRE-COMPILED REGEX: Avoids recompiling on every function call
 # -------------------------------------------------------------------
-current_dir = pathlib.Path(__file__).parent.resolve()
-images_dir = current_dir / "images"
+NAME_NORMALIZE_REGEX = re.compile(r'[^a-z0-9]')
+
+def normalize_name(name: str) -> str:
+    """Strips all spaces, quotes, underscores, and lowers the text for foolproof matching"""
+    return NAME_NORMALIZE_REGEX.sub('', name.lower())
 
 # List of all players to map
 ALL_PARTICIPANTS = [
@@ -38,35 +41,45 @@ ALL_PARTICIPANTS = [
     "Yogesh Karande", "Chandrajit Yadav", "Nitin Nakadi"
 ]
 
-def normalize_name(name):
-    """Strips all spaces, quotes, underscores, and lowers the text for foolproof matching"""
-    return re.sub(r'[^a-z0-9]', '', name.lower())
+# -------------------------------------------------------------------
+# CACHED DATA LOADING: Prevents disk I/O and Base64 encoding on every rerun
+# -------------------------------------------------------------------
+@st.cache_data(show_spinner=False)
+def get_images_json() -> str:
+    """Loads images from disk, encodes to Base64, and returns a JSON string. Cached in memory."""
+    current_dir = pathlib.Path(__file__).parent.resolve()
+    images_dir = current_dir / "images"
+    image_b64_map = {}
 
-image_b64_map = {}
+    if images_dir.exists() and images_dir.is_dir():
+        # Map normalized stem to the path object
+        local_files = {normalize_name(p.stem): p for p in images_dir.glob("*") if p.suffix.lower() in ['.jpg', '.jpeg', '.png', '.webp']}
+        
+        for player in ALL_PARTICIPANTS:
+            norm_player = normalize_name(player)
+            file_path = local_files.get(norm_player)
+            
+            if file_path:
+                try:
+                    with open(file_path, "rb") as f:
+                        b64_str = base64.b64encode(f.read()).decode("utf-8")
+                        suffix = file_path.suffix.lower()
+                        
+                        if suffix == '.png':
+                            mime_type = "image/png"
+                        elif suffix == '.webp':
+                            mime_type = "image/webp"
+                        else:
+                            mime_type = "image/jpeg"
+                            
+                        image_b64_map[player] = f"data:{mime_type};base64,{b64_str}"
+                except Exception:
+                    pass
+                    
+    return json.dumps(image_b64_map)
 
-if images_dir.exists() and images_dir.is_dir():
-    local_files = {normalize_name(p.stem): p for p in images_dir.glob("*") if p.suffix.lower() in ['.jpg', '.jpeg', '.png', '.webp']}
-    
-    for player in ALL_PARTICIPANTS:
-        norm_player = normalize_name(player)
-        if norm_player in local_files:
-            try:
-                with open(local_files[norm_player], "rb") as f:
-                    b64_str = base64.b64encode(f.read()).decode("utf-8")
-                    suffix = local_files[norm_player].suffix.lower()
-                    if suffix == '.png':
-                        mime_type = "image/png"
-                    elif suffix == '.webp':
-                        mime_type = "image/webp"
-                    else:
-                        mime_type = "image/jpeg"
-                    image_b64_map[player] = f"data:{mime_type};base64,{b64_str}"
-            except Exception as e:
-                pass
-
-# Serialize dictionary to JSON so JavaScript can use it safely
-images_json_str = json.dumps(image_b64_map)
-
+# Fetch the heavily processed JSON string instantly from cache
+images_json_str = get_images_json()
 
 # Inject CSS into Streamlit to remove extra scrollbars, padding, and make the iframe fullscreen
 st.markdown("""
@@ -383,7 +396,7 @@ html_code = """
     transition:opacity .2s ease, transform .2s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index:20; box-shadow:0 16px 40px rgba(0,0,0,0.55);
   }
   .roster-card:hover .roster-tooltip{opacity:1; transform:translate(-50%, -4px) scale(1);}
-  .roster-tooltip::after{content:""; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:7px solid transparent; border-top-color:var(--hextech);}
+  .roster-tooltip::after{content:"absolute"; top:100%; left:50%; transform:translateX(-50%); border:7px solid transparent; border-top-color:var(--hextech);}
   .roster-tooltip .tt-name{font-weight:800; font-size:14px; margin-bottom:6px;}
   .roster-tooltip .tt-tier{font-size:10px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; display:inline-flex; align-items:center; gap:4px;}
   .roster-tooltip .tt-stats b{font-size:18px;}
@@ -1103,7 +1116,8 @@ window.addEventListener('pointermove', e=>{
 </html>
 """
 
-# Dynamically inject the local image Base64 mappings generated by Pathlib
+# Dynamically inject the cached local image Base64 mappings generated by Pathlib
 html_code = html_code.replace("/* __IMAGES_JSON__ */", images_json_str)
 
-components.html(html_code, scrolling=True)
+# Using height=1000 provides a reliable bounding box for browsers before JS/CSS takes over
+components.html(html_code, height=1000, scrolling=True)
