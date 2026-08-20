@@ -644,7 +644,7 @@ html_code = """
         <h3>Royal Challengers Bhagyashree</h3>
         <p class="team-role">Captain <b>Bhagyashree Dhotre</b></p>
         <p class="team-role">Vice Captains <b>Sanskar Bagwe</b><b>Pramod Patel</b></p>
-        <p class="team-role">Squad <b>Avinash Chorage</b><b>Rachita Harit</b><b>Wilfred Dsilva</b><b>Umesh Tank</b><b>Asif Khan</b><b>Yogesh Karande</b><b>Arijit Ghosh</b><b>Bhaskar Patil</b><b>Parth Passi</b><b>Bishal Pandit</b></p>
+        <p class="team-role">Squad <b>Avinash Chorage</b><b>Rachita Harit</b><b>Wilfred Dsilva</b><b>Umesh Tank</b><b>Asif Khan</b><b>Yogesh Karande</b><b>Arijit Ghosh</b><b>Bhaskar Patil</b><b>Parth Passi</b><b>Bishal Pandit</b><b>Supriya Koyande</b></p>
     </div>
   </section>
 </div>
